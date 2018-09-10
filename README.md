@@ -3,7 +3,7 @@
 
 ### Statut
 
-<a href='https://travis-ci.org/vzwingma/gestion-budget-communs/branches'><img src='https://travis-ci.org/vzwingma/gestion-budget-communs.svg' alt='Build Status' /></a>
+<a href='https://travis-ci.com/vzwingma/gestion-budget-communs/branches'><img src='https://travis-ci.com/vzwingma/gestion-budget-communs.svg?branch=master' alt='Build Status' /></a>
 <a href='https://github.com/vzwingma/gestion-budget-communs/issues'><img src='http://githubbadges.herokuapp.com/vzwingma/gestion-budget-communs/issues?style=square' alt='Issues number' /></a>
 
 [![Known Vulnerabilities](https://snyk.io/test/github/vzwingma/gestion-budget-communs/badge.svg)](https://snyk.io/test/github/vzwingma/gestion-budget-communs)
