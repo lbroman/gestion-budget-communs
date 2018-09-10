@@ -1,7 +1,16 @@
 package com.terrier.finances.gestion.communs.utils.data;
 
+/**
+ * Enum des URL d'API
+ * @author vzwingma
+ *
+ */
 public class BudgetApiUrlEnum {
-
+	
+	
+	private BudgetApiUrlEnum(){
+		// Constructeur privé pour une classe enum
+	}
 	public static final String ROOT_BASE = "/rest";
 
 	/**
