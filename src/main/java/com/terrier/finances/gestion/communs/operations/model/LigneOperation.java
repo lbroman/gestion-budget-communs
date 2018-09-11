@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Transient;
 
 import com.terrier.finances.gestion.communs.operations.model.enums.EtatOperationEnum;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
-import com.terrier.finances.gestion.communs.parametrages.model.CategorieDepense;
+import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
 import com.terrier.finances.gestion.communs.utils.data.DataUtils;
 
 /**
@@ -28,7 +28,7 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 	private String id;
 	// SS Catégorie
 	@Transient
-	private CategorieDepense ssCategorie;
+	private CategorieOperation ssCategorie;
 	// Libellé
 	private String libelle;
 	// Type de dépense
@@ -69,7 +69,7 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 	 * @param etat état
 	 * @param periodique périodicité de l'opération
 	 */
-	public LigneOperation(CategorieDepense ssCategorie, String libelle, TypeOperationEnum typeDepense, String absValeur, EtatOperationEnum etat, boolean periodique){
+	public LigneOperation(CategorieOperation ssCategorie, String libelle, TypeOperationEnum typeDepense, String absValeur, EtatOperationEnum etat, boolean periodique){
 		this.id = UUID.randomUUID().toString();
 		setSsCategorie(ssCategorie);
 		this.libelle = libelle;
@@ -99,14 +99,14 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 	/**
 	 * @return the ssCategorie
 	 */
-	public CategorieDepense getSsCategorie() {
+	public CategorieOperation getSsCategorie() {
 		return ssCategorie;
 	}
 
 	/**
 	 * @param ssCategorie the ssCategorie to set
 	 */
-	public void setSsCategorie(CategorieDepense ssCategorie) {
+	public void setSsCategorie(CategorieOperation ssCategorie) {
 		LOGGER.trace("> MAJ de la catégorie de l'opération : {}", ssCategorie);
 		this.ssCategorie = ssCategorie;
 	}
@@ -114,11 +114,11 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 	/**
 	 * @return the categorie
 	 */
-	public CategorieDepense getCategorie() {
+	public CategorieOperation getCategorie() {
 		return this.ssCategorie != null ? this.ssCategorie.getCategorieParente() : null;
 	}
 	
-	public void setCategorie(CategorieDepense categorie){
+	public void setCategorie(CategorieOperation categorie){
 		// Ne fais rien. Calculé par le set de Sous Categorie
 	}
 

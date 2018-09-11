@@ -3,21 +3,20 @@ package com.terrier.finances.gestion.communs.parametrages.model;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 
 /**
- * Catégorie de dépense
+ * Catégorie d'opérations
  * @author vzwingma
  *
  */
-@Deprecated
-@Document(collection = "ParamCategoriesDepenses")
-public class CategorieDepense extends AbstractAPIObjectModel implements Comparable<CategorieDepense> {
+public class CategorieOperation extends AbstractAPIObjectModel implements Comparable<CategorieOperation> {
 
 	/**
 	 * 
@@ -40,22 +39,16 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	 * Liste des sous catégories
 	 */
 	@Transient
-	private Set<CategorieDepense> listeSSCategories = new HashSet<>();
+	@JsonIgnore
+	private Set<CategorieOperation> listeSSCategories = new HashSet<>();
 	
-	/**
-	 * Liste des id des sous catégories
-	 */
-	private Set<String> listeIdsSSCategories = new HashSet<>();
 	/**
 	 * Catégorie
 	 */
 	@Transient
-	private CategorieDepense categorieParente;
-	
-	/**
-	 * Catégorie parente
-	 */
-	private String idCategorieParente;
+	@JsonIgnore
+	private CategorieOperation categorieParente;
+
 	/**
 	 * Est ce une catégorie ?
 	 */
@@ -65,7 +58,7 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	/**
 	 * Constructeur pour Spring Data MongSB
 	 */
-	public CategorieDepense(){
+	public CategorieOperation(){
 		this.id = UUID.randomUUID().toString();
 	}
 	
@@ -91,7 +84,7 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	/**
 	 * @return the listeSSCategories
 	 */
-	public Set<CategorieDepense> getListeSSCategories() {
+	public Set<CategorieOperation> getListeSSCategories() {
 		return listeSSCategories;
 	}
 
@@ -99,30 +92,9 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	/**
 	 * @return the categorieParente
 	 */
-	public CategorieDepense getCategorieParente() {
+	public CategorieOperation getCategorieParente() {
 		return categorieParente;
 	}
-
-
-
-	/**
-	 * @param listeIdsSSCategories the listeIdsSSCategories to set
-	 */
-	public void setListeIdsSSCategories(Set<String> listeIdsSSCategories) {
-		this.listeIdsSSCategories = listeIdsSSCategories;
-	}
-
-
-
-
-	/**
-	 * @param idCategorieParente the idCategorieParente to set
-	 */
-	public void setIdCategorieParente(String idCategorieParente) {
-		this.idCategorieParente = idCategorieParente;
-	}
-
-
 
 
 	/**
@@ -179,7 +151,7 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	/**
 	 * @param categorieParente the categorieParente to set
 	 */
-	public void setCategorieParente(CategorieDepense categorieParente) {
+	public void setCategorieParente(CategorieOperation categorieParente) {
 		this.categorieParente = categorieParente;
 	}
 
@@ -191,7 +163,7 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	 * @return the listeIdsSSCategories
 	 */
 	public Set<String> getListeIdsSSCategories() {
-		return listeIdsSSCategories;
+		return this.listeSSCategories.stream().map(ssc -> ssc.getId()).collect(Collectors.toSet());
 	}
 
 
@@ -202,7 +174,10 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	 * @return the idCategorieParente
 	 */
 	public String getIdCategorieParente() {
-		return idCategorieParente;
+		if(this.categorieParente != null){
+			return this.categorieParente.getId();
+		}
+		return null;
 	}
 
 
@@ -246,10 +221,10 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof CategorieDepense)) {
+		if (!(obj instanceof CategorieOperation)) {
 			return false;
 		}
-		CategorieDepense other = (CategorieDepense) obj;
+		CategorieOperation other = (CategorieOperation) obj;
 		if (id == null) {
 			if (other.id != null) {
 				return false;
@@ -275,7 +250,7 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(CategorieDepense o) {
+	public int compareTo(CategorieOperation o) {
 		if(o != null){
 			return this.libelle.compareTo(o.getLibelle());
 		}

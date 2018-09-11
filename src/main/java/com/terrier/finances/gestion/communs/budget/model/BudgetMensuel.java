@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
-import com.terrier.finances.gestion.communs.parametrages.model.CategorieDepense;
+import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
 import com.terrier.finances.gestion.communs.parametrages.model.enums.IdsCategoriesEnum;
 
 /**
@@ -71,8 +71,8 @@ public class BudgetMensuel implements Serializable {
 
 	private transient boolean isNewBudget = false;
 	
-	private Map<CategorieDepense, Double[]> totalParCategories = new HashMap<>();
-	private Map<CategorieDepense, Double[]> totalParSSCategories = new HashMap<>();
+	private Map<CategorieOperation, Double[]> totalParCategories = new HashMap<>();
+	private Map<CategorieOperation, Double[]> totalParSSCategories = new HashMap<>();
 
 	/**
 	 * Totaux
@@ -108,14 +108,14 @@ public class BudgetMensuel implements Serializable {
 	/**
 	 * @return the totalParCategories
 	 */
-	public Map<CategorieDepense, Double[]> getTotalParCategories() {
+	public Map<CategorieOperation, Double[]> getTotalParCategories() {
 		return totalParCategories;
 	}
 
 	/**
 	 * @return the totalParSSCategories
 	 */
-	public Map<CategorieDepense, Double[]> getTotalParSSCategories() {
+	public Map<CategorieOperation, Double[]> getTotalParSSCategories() {
 		return totalParSSCategories;
 	}
 
@@ -283,7 +283,7 @@ public class BudgetMensuel implements Serializable {
 	 * @param totalParCategories the totalParCategories to set
 	 */
 	public void setTotalParCategories(
-			Map<CategorieDepense, Double[]> totalParCategories) {
+			Map<CategorieOperation, Double[]> totalParCategories) {
 		this.totalParCategories = totalParCategories;
 	}
 
@@ -291,7 +291,7 @@ public class BudgetMensuel implements Serializable {
 	 * @param totalParSSCategories the totalParSSCategories to set
 	 */
 	public void setTotalParSSCategories(
-			Map<CategorieDepense, Double[]> totalParSSCategories) {
+			Map<CategorieOperation, Double[]> totalParSSCategories) {
 		this.totalParSSCategories = totalParSSCategories;
 	}
 
