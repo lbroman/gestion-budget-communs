@@ -6,7 +6,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
@@ -38,14 +37,11 @@ public class CategorieOperation extends AbstractAPIObjectModel implements Compar
 	/**
 	 * Liste des sous catégories
 	 */
-	@Transient
-	@JsonIgnore
 	private Set<CategorieOperation> listeSSCategories = new HashSet<>();
 	
 	/**
 	 * Catégorie
 	 */
-	@Transient
 	@JsonIgnore
 	private CategorieOperation categorieParente;
 
@@ -154,32 +150,6 @@ public class CategorieOperation extends AbstractAPIObjectModel implements Compar
 	public void setCategorieParente(CategorieOperation categorieParente) {
 		this.categorieParente = categorieParente;
 	}
-
-
-
-
-
-	/**
-	 * @return the listeIdsSSCategories
-	 */
-	public Set<String> getListeIdsSSCategories() {
-		return this.listeSSCategories.stream().map(ssc -> ssc.getId()).collect(Collectors.toSet());
-	}
-
-
-
-
-
-	/**
-	 * @return the idCategorieParente
-	 */
-	public String getIdCategorieParente() {
-		if(this.categorieParente != null){
-			return this.categorieParente.getId();
-		}
-		return null;
-	}
-
 
 
 
