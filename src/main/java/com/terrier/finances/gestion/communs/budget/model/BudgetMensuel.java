@@ -199,7 +199,9 @@ public class BudgetMensuel implements Serializable {
 	}
 
 	/**
+	 * Mise à jour des valeurs depuis le mois précédent
 	 * @param resultatMoisPrecedent the resultatMoisPrecedent to set
+	 * @param margeMoisPrecedent marge mois précédent
 	 */
 	public void setResultatMoisPrecedent(Double resultatMoisPrecedent, Double margeMoisPrecedent) {
 		this.moisPrecedentResultat = resultatMoisPrecedent;
@@ -294,7 +296,7 @@ public class BudgetMensuel implements Serializable {
 	}
 
 	/**
-	 * @param nowArgentAvance the nowArgentAvance to set
+	 * @param soldeNow the soldeNow to set
 	 */
 	public void setSoldeNow(Double soldeNow) {
 		this.soldeNow = soldeNow;
@@ -302,7 +304,7 @@ public class BudgetMensuel implements Serializable {
 
 
 	/**
-	 * @param finArgentAvance the finArgentAvance to set
+	 * @param soldeFin the soldeFin to set
 	 */
 	public void setSoldeFin(Double soldeFin) {
 		this.soldeFin = soldeFin;

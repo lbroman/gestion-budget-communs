@@ -67,6 +67,7 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 	 * @param typeDepense type d'opération
 	 * @param absValeur valeur montant en valeur absolue
 	 * @param etat état
+	 * @param periodique périodicité de l'opération
 	 */
 	public LigneOperation(CategorieDepense ssCategorie, String libelle, TypeOperationEnum typeDepense, String absValeur, EtatOperationEnum etat, boolean periodique){
 		this.id = UUID.randomUUID().toString();

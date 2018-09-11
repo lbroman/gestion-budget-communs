@@ -50,9 +50,9 @@ public class DataUtils {
 	}
 
 	/**
-	 * @param utcTime
+	 * @param utcTime temps en UTC
 	 * @return date transformée en local
-	 * @throws ParseException
+	 * @throws ParseException erreur de parsing
 	 */
 	public static final String getUtcToLocalTime(String utcTime) throws ParseException{
 		SimpleDateFormat sdfutc = new SimpleDateFormat(DATE_DAY_HOUR_PATTERN, Locale.FRENCH);
@@ -72,6 +72,7 @@ public class DataUtils {
 	}
 
 	/**
+	 * @param localDateTime temps local
 	 * @return la date actuelle en LocalDate
 	 */
 	public static final Long getLongFromLocalDateTime(LocalDateTime localDateTime){
@@ -83,6 +84,7 @@ public class DataUtils {
 	
 
 	/**
+	 * @param longTime temps en ms
 	 * @return la date actuelle en LocalDate
 	 */
 	public static final LocalDateTime getLocalDateTimeFromLong(Long longTime){
@@ -101,7 +103,7 @@ public class DataUtils {
 	}
 
 	/**
-	 * @param month
+	 * @param month mois
 	 * @return la date localisée en début du mois, au mois positionnée
 	 */
 	public static final LocalDate localDateFirstDayOfMonth(Month month){
@@ -112,7 +114,8 @@ public class DataUtils {
 	}
 
 	/**
-	 * @param month
+	 * @param month mois
+	 * @param year année
 	 * @return la date localisée en début du mois, au mois positionnée
 	 */
 	public static final LocalDate localDateFirstDayOfMonth(Month month, int year){
@@ -123,6 +126,10 @@ public class DataUtils {
 				.with(ChronoField.YEAR, year);
 	}
 
+	/**
+	 * @param date date en local
+	 * @return libellé de la date
+	 */
 	public static final String getLibelleDate(LocalDateTime date){
 		DateTimeFormatter sdf = new DateTimeFormatterBuilder()
 				.appendPattern(DataUtils.DATE_FULL_TEXT_PATTERN)
@@ -131,15 +138,15 @@ public class DataUtils {
 	}
 	
 	/**
-	 * @param date
-	 * @return localdate
+	 * @param date date
+	 * @return localdate local date correspondante
 	 */
 	public static LocalDate asLocalDate(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	/**
-	 * @param listeOperations
+	 * @param listeOperations liste des opérations
 	 * @return date max d'une liste de dépenses
 	 */
 	public static LocalDate getMaxDateListeOperations(List<LigneOperation> listeOperations){
@@ -169,7 +176,7 @@ public class DataUtils {
 
 
 	/**
-	 * @param valeurS
+	 * @param valeurS valeur en String
 	 * @return la valeur d'un String en double
 	 */
 	public static String getValueFromString(String valeurS){

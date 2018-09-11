@@ -110,7 +110,10 @@ public class Utilisateur implements Serializable {
 		this.prefsUtilisateur = prefsUtilisateur;
 	}
 
+
 	/**
+	 * @param clePreference clé d'une préférence
+	 * @param <T> Type de la préférence
 	 * @return the preferences
 	 */
 	@SuppressWarnings("unchecked")

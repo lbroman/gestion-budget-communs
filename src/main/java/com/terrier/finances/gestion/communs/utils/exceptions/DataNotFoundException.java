@@ -21,7 +21,7 @@ public class DataNotFoundException extends Exception {
 	private static final long serialVersionUID = -5428709492299879225L;
 
 	/**
-	 * @param message
+	 * @param message d'erreur
 	 */
 	public DataNotFoundException(String message) {
 		super(message);

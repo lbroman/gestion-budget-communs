@@ -18,12 +18,10 @@ public class TotalBudgetMensuel {
 
 	
 	
-	
-	
 	/**
-	 * @param typeTotal
-	 * @param totalADate
-	 * @param totalFinMois
+	 * @param typeTotal type du total
+	 * @param totalADate valeur à date
+	 * @param totalFinMois valeur fin de mois
 	 */
 	public TotalBudgetMensuel(String typeTotal, double totalADate, double totalFinMois) {
 		super();
@@ -73,7 +71,4 @@ public class TotalBudgetMensuel {
 	public void setTotalFinMois(double totalFinMois) {
 		this.totalFinMois = totalFinMois;
 	}
-	
-	
-	
 }

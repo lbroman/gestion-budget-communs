@@ -155,7 +155,7 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	}
 
 	/**
-	 * @param idf the idf to set
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
