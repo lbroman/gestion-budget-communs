@@ -3,9 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.vzwingma.finances.budget</groupId>
 	<artifactId>communs</artifactId>
-	<version>7.0.0-SNAPSHOT</version>
+	<version>7.0.0</version>
+
 	<name>[Budget] Communs</name>
-	<description>[Budget] Communs</description>
+	<description>Communs de l'application</description>
+
+	<url>https://github.com/vzwingma/gestion-budget-communs</url>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -17,6 +21,7 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -68,6 +73,33 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.8.2</version>
 				<configuration>
@@ -89,8 +121,8 @@
 				</executions>
 				<configuration>
 					<serverId>oss-deploy</serverId>
-					<nexusUrl>https://oss.sonatype.org/content/repositories/snapshots</nexusUrl>
-					<skipStaging>true</skipStaging>
+					<nexusUrl>https://oss.sonatype.org</nexusUrl>
+					<repositoryDirectory>/service/local/staging/deploy/maven2</repositoryDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -114,7 +146,14 @@
 			<id>vzwingma</id>
 		</developer>
 	</developers>
-
+	<licenses>
+		<license>
+			<name>Apache 2.0 License</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>oss-deploy</id>
