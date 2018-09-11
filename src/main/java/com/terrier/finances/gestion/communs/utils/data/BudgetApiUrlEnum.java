@@ -17,8 +17,8 @@ public class BudgetApiUrlEnum {
 	public static final String ADMIN_BASE = "/admin";	
 	public static final String ADMIN_STATUT = "/v1/statut";
 	public static final String ADMIN_STATUT_FULL = ADMIN_BASE + ADMIN_STATUT;
-	public static final String ADMIN_PASSWORD = "/v1/password";
-	public static final String ADMIN_PASSWORD_FULL = ADMIN_BASE + ADMIN_PASSWORD;
+	public static final String ADMIN_ACCESS = "/v1/password";
+	public static final String ADMIN_ACCESS_FULL = ADMIN_BASE + ADMIN_ACCESS;
 	/**
 	 * Authentification / Utilisateurs
 	 */
