@@ -60,7 +60,7 @@ public class BudgetApiUrlEnum {
 	 * Budget
 	 */
 	public static final String BUDGET_BASE = "/budgets/v1";	
-	public static final String BUDGET_ID = "/{idBudget}";
+	public static final String BUDGET_ID = "/{idBudget}/{idUtilisateur}";
 	public static final String BUDGET_ID_FULL = BUDGET_BASE + BUDGET_ID;
 
 	public static final String BUDGET_QUERY = "/"; // ?idCompte={idCompte}&mois={mois}&annee={annee}&idUtilisateur={idUtilisateur}

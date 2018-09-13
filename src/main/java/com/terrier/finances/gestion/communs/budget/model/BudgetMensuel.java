@@ -10,9 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
@@ -32,10 +30,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 4393433203514049021L;
-	/**
-	 * Logger
-	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(BudgetMensuel.class);
+
 	/**
 	 * Mois du budget
 	 */
@@ -58,20 +53,23 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	 */
 	private Double moisPrecedentResultat;
 
-	private Double margeMoisPrecedent = 0D;
+	private Double moisPrecedentMarge = 0D;
 
 	/**
 	 * Liste des dépenses
 	 */
+	@JsonIgnore
 	private List<LigneOperation> listeOperations = new ArrayList<>();
 	/** 
 	 * Liste des libellés pour l'autocomplétion
 	 */
+	@JsonIgnore
 	private transient Set<String> setLibellesDepensesForAutocomplete= new TreeSet<>();
 
 	private transient boolean isNewBudget = false;
-	
+
 	private Map<CategorieOperation, Double[]> totalParCategories = new HashMap<>();
+
 	private Map<CategorieOperation, Double[]> totalParSSCategories = new HashMap<>();
 
 	/**
@@ -86,7 +84,6 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	public void razCalculs(){
 		totalParCategories.clear();
 		totalParSSCategories.clear();
-		LOGGER.debug("Raz des calculs du budget");
 		soldeNow = this.moisPrecedentResultat;
 		soldeFin = this.moisPrecedentResultat;
 	}
@@ -129,6 +126,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	/**
 	 * @return the nowCompteReel
 	 */
+	@JsonIgnore
 	public double getSoldeReelNow() {
 		return soldeNow + getMarge();
 	}
@@ -143,6 +141,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	/**
 	 * @return the finCompteReel
 	 */
+	@JsonIgnore
 	public double getSoldeReelFin() {
 		return soldeFin + getMarge();
 	}
@@ -207,7 +206,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 		this.moisPrecedentResultat = resultatMoisPrecedent;
 		this.soldeFin = resultatMoisPrecedent;
 		this.soldeNow = resultatMoisPrecedent;
-		this.margeMoisPrecedent = margeMoisPrecedent;
+		this.moisPrecedentMarge = margeMoisPrecedent;
 		this.margeCalculee = margeMoisPrecedent;
 	}
 
@@ -230,7 +229,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	 * @return the margeSecurite
 	 */
 	public Double getMoisPrecedentMarge() {
-		return margeMoisPrecedent;
+		return moisPrecedentMarge;
 	}
 	
 	
@@ -238,8 +237,9 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	/**
 	 * @return the margeSecurite
 	 */
+	@JsonIgnore
 	public Double getMarge() {
-		margeCalculee = this.margeMoisPrecedent;
+		margeCalculee = this.moisPrecedentMarge;
 		this.listeOperations.stream()
 			.filter(op -> IdsCategoriesEnum.RESERVE.getId().equals(op.getSsCategorie().getId()))
 			.forEach(op -> {
