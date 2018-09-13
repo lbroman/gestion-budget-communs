@@ -12,7 +12,7 @@ import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 import com.terrier.finances.gestion.communs.operations.model.enums.EtatOperationEnum;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
 import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
-import com.terrier.finances.gestion.communs.utils.data.DataUtils;
+import com.terrier.finances.gestion.communs.utils.data.BudgetDataUtils;
 
 /**
  * 
@@ -158,7 +158,7 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	}
 
 	public void setValeurAbsStringToDouble(String valeurS){
-		valeurS = DataUtils.getValueFromString(valeurS);
+		valeurS = BudgetDataUtils.getValueFromString(valeurS);
 		if(valeurS != null){
 			this.valeur = Math.abs(Double.parseDouble(valeurS)) * (TypeOperationEnum.DEPENSE.equals(this.getTypeDepense()) ? -1 : 1);
 		}

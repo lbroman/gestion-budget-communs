@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
-import com.terrier.finances.gestion.communs.utils.data.DataUtils;
+import com.terrier.finances.gestion.communs.utils.data.BudgetDateTimeUtils;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -56,14 +56,14 @@ public class IntervallesCompteAPIObject extends AbstractAPIObjectModel {
 	 */
 	@JsonIgnore
 	public LocalDate getLocalDatePremierBudget() {
-		return DataUtils.getLocalDateFromLong(datePremierBudget);
+		return BudgetDateTimeUtils.getLocalDateFromLong(datePremierBudget);
 	}
 	/**
 	 * @return the dateDernierBudget
 	 */
 	@JsonIgnore
 	public LocalDate getLocalDateDernierBudget() {
-		return DataUtils.getLocalDateFromLong(dateDernierBudget);
+		return BudgetDateTimeUtils.getLocalDateFromLong(dateDernierBudget);
 	}
 
 	

@@ -13,14 +13,9 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.TimeZone;
-
-import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 
 
 /**
@@ -28,7 +23,7 @@ import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
  * @author vzwingma
  *
  */
-public class DataUtils {
+public class BudgetDateTimeUtils {
 
 	public static final String DATE_DAY_PATTERN = "dd/MM/yyyy";
 	public static final String DATE_DAY_HOUR_PATTERN = DATE_DAY_PATTERN + " HH:mm";
@@ -37,7 +32,7 @@ public class DataUtils {
 	public static final String DATE_FULL_TEXT_PATTERN = "dd MMMM yyyy HH:mm";
 
 
-	private DataUtils(){
+	private BudgetDateTimeUtils(){
 		// Constructeur privé pour classe utilitaire
 	}
 
@@ -59,7 +54,7 @@ public class DataUtils {
 		sdfutc.setTimeZone(TimeZone.getTimeZone("UTC"));
 		Date dateBuild = sdfutc.parse(utcTime);
 		SimpleDateFormat sdflocale = new SimpleDateFormat(DATE_DAY_HOUR_PATTERN, Locale.FRENCH);
-		sdflocale.setTimeZone(DataUtils.getTzParis());
+		sdflocale.setTimeZone(BudgetDateTimeUtils.getTzParis());
 		return sdflocale.format(dateBuild);
 	}
 
@@ -155,7 +150,7 @@ public class DataUtils {
 	 */
 	public static final String getLibelleDate(LocalDateTime date){
 		DateTimeFormatter sdf = new DateTimeFormatterBuilder()
-				.appendPattern(DataUtils.DATE_FULL_TEXT_PATTERN)
+				.appendPattern(BudgetDateTimeUtils.DATE_FULL_TEXT_PATTERN)
 				.toFormatter(Locale.FRENCH);
 		return date.format(sdf);
 	}
@@ -169,50 +164,10 @@ public class DataUtils {
 	}
 
 	/**
-	 * @param listeOperations liste des opérations
-	 * @return date max d'une liste de dépenses
+	 * @param localdate locamdate
+	 * @return date local date correspondante
 	 */
-	public static LocalDate getMaxDateListeOperations(List<LigneOperation> listeOperations){
-
-		LocalDate localDateDerniereOperation = localDateNow();
-
-		if(listeOperations != null && !listeOperations.isEmpty()){
-			// Comparaison de date
-			Comparator <LigneOperation> comparator = Comparator.comparing(LigneOperation::getDateOperation, (date1, date2) -> {
-				if(date1 == null){
-					return 1;
-				}
-				else if(date2 == null){
-					return -1;
-				}
-				else{
-					return date1.before(date2) ? -1 : 1;
-				}
-			});
-			Optional<LigneOperation> maxDate = listeOperations.stream().max(comparator);
-			if(maxDate.isPresent() && maxDate.get().getDateOperation() != null){
-				localDateDerniereOperation = asLocalDate(maxDate.get().getDateOperation());
-			}
-		}
-		return localDateDerniereOperation;
-	}
-
-
-	/**
-	 * @param valeurS valeur en String
-	 * @return la valeur d'un String en double
-	 */
-	public static String getValueFromString(String valeurS){
-
-		if(valeurS != null){
-			valeurS = valeurS.replaceAll(",", ".");
-			try{
-				valeurS = Double.toString(Double.valueOf(valeurS));
-			}
-			catch(Exception e){
-				valeurS = null;
-			}
-		}
-		return valeurS;
+	public static Date asDate(LocalDate localdate) {
+		return new Date(localdate.toEpochDay());
 	}
 }

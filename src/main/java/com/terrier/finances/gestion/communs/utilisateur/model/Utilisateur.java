@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.utilisateur.enums.UtilisateurDroitsEnum;
 import com.terrier.finances.gestion.communs.utilisateur.enums.UtilisateurPrefsEnum;
-import com.terrier.finances.gestion.communs.utils.data.DataUtils;
+import com.terrier.finances.gestion.communs.utils.data.BudgetDateTimeUtils;
 
 /**
  * Définition d'un utilisateur de la BDD
@@ -193,7 +193,7 @@ public class Utilisateur implements Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Utilisateur [login=").append(login)
 				.append(", dateDernierAcces=")
-				.append(dernierAcces != null ? DataUtils.getLibelleDate(dernierAcces) : "nulle").append(", libelle=").append(libelle)
+				.append(dernierAcces != null ? BudgetDateTimeUtils.getLibelleDate(dernierAcces) : "nulle").append(", libelle=").append(libelle)
 				.append("]");
 		return builder.toString();
 	}

@@ -65,4 +65,7 @@ public class BudgetApiUrlEnum {
 
 	public static final String BUDGET_QUERY = "/"; // ?idCompte={idCompte}&mois={mois}&annee={annee}&idUtilisateur={idUtilisateur}
 	public static final String BUDGET_QUERY_FULL = BUDGET_BASE + BUDGET_QUERY;
+	
+	public static final String BUDGET_ETAT = "/{idBudget}/{idUtilisateur}/etat"; //?actif=true  ou ?uptodateto=long
+	public static final String BUDGET_ETAT_FULL = BUDGET_BASE + BUDGET_ETAT;
 }
