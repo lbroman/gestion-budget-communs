@@ -23,7 +23,7 @@ public class BudgetNotFoundException extends Exception {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BudgetNotFoundException.class);
 	
 	
-	public BudgetNotFoundException(StringBuilder libelleErreur){
+	public BudgetNotFoundException(String libelleErreur){
 		LOGGER.error("{}", libelleErreur);
 	}
 }

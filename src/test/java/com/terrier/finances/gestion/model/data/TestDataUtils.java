@@ -92,4 +92,15 @@ public class TestDataUtils {
 		assertNotNull(dt);
 		assertEquals(t, dt);
 	}
+	
+
+	@Test
+	public void testLocalDate(){
+		LocalDate t = LocalDate.now();
+		Long lt = DataUtils.getLongFromLocalDate(t);
+		assertNotNull(lt);
+		LocalDate dt = DataUtils.getLocalDateFromLong(lt);
+		assertNotNull(dt);
+		assertEquals(t, dt);
+	}
 }

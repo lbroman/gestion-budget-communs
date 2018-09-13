@@ -1,7 +1,6 @@
 			
 package com.terrier.finances.gestion.communs.budget.model;
 
-import java.io.Serializable;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +13,7 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
@@ -25,7 +25,7 @@ import com.terrier.finances.gestion.communs.parametrages.model.enums.IdsCategori
  * @author vzwingma
  *
  */
-public class BudgetMensuel implements Serializable {
+public class BudgetMensuel extends AbstractAPIObjectModel {
 
 	private String id;
 	/**

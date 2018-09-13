@@ -93,6 +93,29 @@ public class DataUtils {
 		}
 		return null;
 	}
+	
+
+	/**
+	 * @param localDate temps local
+	 * @return la date actuelle en LocalDate
+	 */
+	public static final Long getLongFromLocalDate(LocalDate localDate){
+		if(localDate != null){
+			return localDate.toEpochDay();
+		}
+		return null;
+	}
+
+	/**
+	 * @param longTime temps en ms
+	 * @return la date actuelle en LocalDate
+	 */
+	public static final LocalDate getLocalDateFromLong(Long longTime){
+		if(longTime != null){
+			return LocalDate.ofEpochDay(longTime);
+		}
+		return null;
+	}
 
 	/**
 	 * @return la date localisée au début du mois

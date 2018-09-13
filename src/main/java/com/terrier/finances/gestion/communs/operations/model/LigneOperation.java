@@ -1,6 +1,5 @@
 package com.terrier.finances.gestion.communs.operations.model;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -9,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Transient;
 
+import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 import com.terrier.finances.gestion.communs.operations.model.enums.EtatOperationEnum;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
 import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
@@ -20,7 +20,7 @@ import com.terrier.finances.gestion.communs.utils.data.DataUtils;
  * @author vzwingma
  *
  */
-public class LigneOperation implements Comparable<LigneOperation>, Serializable {
+public class LigneOperation extends AbstractAPIObjectModel implements Comparable<LigneOperation> {
 
 	//
 	private static final long serialVersionUID = -5020058513824102750L;
