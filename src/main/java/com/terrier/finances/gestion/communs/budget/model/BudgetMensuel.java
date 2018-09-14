@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
@@ -31,6 +34,8 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	 */
 	private static final long serialVersionUID = 4393433203514049021L;
 
+	@JsonIgnore
+	private static final transient Logger LOGGER = LoggerFactory.getLogger( BudgetMensuel.class );
 	/**
 	 * Mois du budget
 	 */
@@ -237,15 +242,19 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	@JsonIgnore
 	public Double getMarge() {
 		margeCalculee = this.moisPrecedentMarge;
-		if(!this.listeOperations.isEmpty()){
-			this.listeOperations.stream()
-			.filter(op -> IdsCategoriesEnum.RESERVE.getId().equals(op.getSsCategorie().getId()))
-			.forEach(op -> {
-				int type = TypeOperationEnum.CREDIT.equals(op.getTypeDepense()) ? 1 : -1;
-				margeCalculee = margeCalculee + type * Double.valueOf(op.getValeur());
-			});
+		try{
+			if(this.listeOperations != null && !this.listeOperations.isEmpty()){
+				this.listeOperations.stream()
+				.filter(op -> op.getSsCategorie() != null && IdsCategoriesEnum.RESERVE.getId().equals(op.getSsCategorie().getId()))
+				.forEach(op -> {
+					int type = TypeOperationEnum.CREDIT.equals(op.getTypeDepense()) ? 1 : -1;
+					margeCalculee = margeCalculee + type * Double.valueOf(op.getValeur());
+				});
+			}
 		}
-		System.err.println(margeCalculee);
+		catch(Exception e){
+			LOGGER.warn("Erreur lors du calcul de la marge à partir des opérations {}. La marge du mois précédent est reportée [{}]", this.listeOperations, this.moisPrecedentMarge, e);
+		}
 		return margeCalculee;
 	}
 

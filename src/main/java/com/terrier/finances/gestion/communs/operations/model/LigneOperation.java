@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.annotation.Transient;
 
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 import com.terrier.finances.gestion.communs.operations.model.enums.EtatOperationEnum;
@@ -27,7 +26,6 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	// Id
 	private String id;
 	// SS Catégorie
-	@Transient
 	private CategorieOperation ssCategorie;
 	// Libellé
 	private String libelle;
