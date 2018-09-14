@@ -64,6 +64,8 @@ public class TestBudgetDataUtils {
 	
 	@Test
 	public void getAnneeFromBudgetId(){
-		assertEquals("2018", BudgetDataUtils.getAnneeFromBudgetId("ING_2018_1"));
+		assertEquals(Integer.valueOf(2018), BudgetDataUtils.getAnneeFromBudgetId("ING_2018_1"));
+		assertEquals(Month.JANUARY, BudgetDataUtils.getMoisFromBudgetId("ING_2018_1"));
+		assertEquals("ING", BudgetDataUtils.getCompteFromBudgetId("ING_2018_1"));
 	}
 }

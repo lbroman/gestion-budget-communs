@@ -30,15 +30,34 @@ public class BudgetDataUtils {
 	public static String getBudgetId(CompteBancaire compte, Month mois, int annee){
 		return compte.getId()+"_"+ annee +"_"+ mois.getValue();
 	}
-	
+	/**
+	 * @param budgetId id budget
+	 * @return la valeur de l'année à partir de l'id
+	 */
+	public static Month getMoisFromBudgetId(String budgetId){
+		if(budgetId != null){
+			return Month.of(Integer.parseInt(budgetId.substring(budgetId.lastIndexOf("_") + 1, budgetId.length())));
+		}
+		return null;
+	}
+	/**
+	 * @param budgetId id budget
+	 * @return la valeur de l'année à partir de l'id
+	 */
+	public static String getCompteFromBudgetId(String budgetId){
+		if(budgetId != null){
+			return budgetId.substring(0, budgetId.indexOf("_"));
+		}
+		return null;
+	}
 	
 	/**
 	 * @param budgetId id budget
 	 * @return la valeur de l'année à partir de l'id
 	 */
-	public static String getAnneeFromBudgetId(String budgetId){
+	public static Integer getAnneeFromBudgetId(String budgetId){
 		if(budgetId != null){
-			return budgetId.substring(budgetId.indexOf("_") + 1, budgetId.lastIndexOf("_"));
+			return Integer.parseInt(budgetId.substring(budgetId.indexOf("_") + 1, budgetId.lastIndexOf("_")));
 		}
 		return null;
 	}
