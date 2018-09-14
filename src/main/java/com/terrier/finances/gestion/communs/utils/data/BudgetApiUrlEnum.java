@@ -40,7 +40,7 @@ public class BudgetApiUrlEnum {
 	 * Comptes
 	 */
 	public static final String COMPTES_BASE = "/comptes/v1";
-	public static final String COMPTES_LIST = "";
+	public static final String COMPTES_LIST = "/{idUtilisateur}";
 	public static final String COMPTES_LIST_FULL = COMPTES_BASE + COMPTES_LIST;
 
 	public static final String COMPTES_ID = "/{idCompte}/{idUtilisateur}";
@@ -68,9 +68,14 @@ public class BudgetApiUrlEnum {
 	public static final String BUDGET_ID = "/{idBudget}/{idUtilisateur}";
 	public static final String BUDGET_ID_FULL = BUDGET_BASE + BUDGET_ID;
 
-	public static final String BUDGET_QUERY = "/"; // ?idCompte={idCompte}&mois={mois}&annee={annee}&idUtilisateur={idUtilisateur}
+	/*
+	 * Avec en paramètre ?idCompte={idCompte}&mois={mois}&annee={annee}&idUtilisateur={idUtilisateur}
+	 */
+	public static final String BUDGET_QUERY = "/query"; 
 	public static final String BUDGET_QUERY_FULL = BUDGET_BASE + BUDGET_QUERY;
-	
-	public static final String BUDGET_ETAT = "/{idBudget}/{idUtilisateur}/etat"; //?actif=true  ou ?uptodateto=long
+	/*
+	 * Avec en paramètres :  ?actif=true  ou ?uptodateto=long
+	 */
+	public static final String BUDGET_ETAT = "/{idBudget}/{idUtilisateur}/etat"; 
 	public static final String BUDGET_ETAT_FULL = BUDGET_BASE + BUDGET_ETAT;
 }

@@ -66,5 +66,16 @@ public class IntervallesCompteAPIObject extends AbstractAPIObjectModel {
 		return BudgetDateTimeUtils.getLocalDateFromLong(dateDernierBudget);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("IntervallesCompteAPIObject [datePremierBudget=").append(datePremierBudget)
+				.append(", dateDernierBudget=").append(dateDernierBudget).append("]");
+		return builder.toString();
+	}
+
 	
 }

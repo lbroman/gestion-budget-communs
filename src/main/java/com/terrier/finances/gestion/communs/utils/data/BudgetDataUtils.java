@@ -28,7 +28,7 @@ public class BudgetDataUtils {
 	 * @return id de budget
 	 */
 	public static String getBudgetId(CompteBancaire compte, Month mois, int annee){
-		return compte.getId()+"_"+ annee +"_"+ mois.getValue();
+		return new StringBuilder().append(compte.getId()).append("_").append(annee).append("_").append(mois.getValue()).toString();
 	}
 	/**
 	 * @param budgetId id budget
@@ -36,7 +36,7 @@ public class BudgetDataUtils {
 	 */
 	public static Month getMoisFromBudgetId(String budgetId){
 		if(budgetId != null){
-			return Month.of(Integer.parseInt(budgetId.substring(budgetId.lastIndexOf("_") + 1, budgetId.length())));
+			return Month.of(Integer.parseInt(budgetId.substring(budgetId.lastIndexOf('_') + 1, budgetId.length())));
 		}
 		return null;
 	}
@@ -46,7 +46,7 @@ public class BudgetDataUtils {
 	 */
 	public static String getCompteFromBudgetId(String budgetId){
 		if(budgetId != null){
-			return budgetId.substring(0, budgetId.indexOf("_"));
+			return budgetId.substring(0, budgetId.indexOf('_'));
 		}
 		return null;
 	}
@@ -57,7 +57,7 @@ public class BudgetDataUtils {
 	 */
 	public static Integer getAnneeFromBudgetId(String budgetId){
 		if(budgetId != null){
-			return Integer.parseInt(budgetId.substring(budgetId.indexOf("_") + 1, budgetId.lastIndexOf("_")));
+			return Integer.parseInt(budgetId.substring(budgetId.indexOf('_') + 1, budgetId.lastIndexOf('_')));
 		}
 		return null;
 	}
