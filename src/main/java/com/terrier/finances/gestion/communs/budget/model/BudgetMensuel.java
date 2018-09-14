@@ -11,7 +11,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
+import com.terrier.finances.gestion.communs.api.converter.CategorieOperationsKeySerializer;
 import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
@@ -105,6 +107,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	/**
 	 * @return the totalParCategories
 	 */
+	@JsonSerialize(keyUsing = CategorieOperationsKeySerializer.class) 
 	public Map<CategorieOperation, Double[]> getTotalParCategories() {
 		return totalParCategories;
 	}
@@ -112,6 +115,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	/**
 	 * @return the totalParSSCategories
 	 */
+	@JsonSerialize(keyUsing = CategorieOperationsKeySerializer.class)  
 	public Map<CategorieOperation, Double[]> getTotalParSSCategories() {
 		return totalParSSCategories;
 	}
