@@ -7,8 +7,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -62,11 +60,6 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	 */
 	@JsonIgnore
 	private List<LigneOperation> listeOperations = new ArrayList<>();
-	/** 
-	 * Liste des libellés pour l'autocomplétion
-	 */
-	@JsonIgnore
-	private transient Set<String> setLibellesDepensesForAutocomplete= new TreeSet<>();
 
 	private transient boolean isNewBudget = false;
 
@@ -329,14 +322,6 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 		this.actif = actif;
 	}
 
-	/**
-	 * @return the listeLibellesDepenses
-	 */
-	public Set<String> getSetLibellesDepensesForAutocomplete() {
-		return setLibellesDepensesForAutocomplete;
-	}
-	
-	
 
 	/**
 	 * @return the isNewBudget

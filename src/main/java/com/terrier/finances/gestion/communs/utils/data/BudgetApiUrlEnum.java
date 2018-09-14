@@ -48,6 +48,11 @@ public class BudgetApiUrlEnum {
 
 	public static final String COMPTES_INTERVALLES = "/{idCompte}/intervalles";
 	public static final String COMPTES_INTERVALLES_FULL = COMPTES_BASE + COMPTES_INTERVALLES;
+	
+	public static final String COMPTES_OPERATIONS_LIBELLES = "/{idCompte}/{idUtilisateur}/operations/libelles";
+	public static final String COMPTES_OPERATIONS_LIBELLES_FULL = COMPTES_BASE + COMPTES_OPERATIONS_LIBELLES;
+	
+	
 	/**
 	 * Paramétrages
 	 */
