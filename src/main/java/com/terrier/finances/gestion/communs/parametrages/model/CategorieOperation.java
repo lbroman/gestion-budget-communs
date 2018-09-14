@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
+import com.terrier.finances.gestion.communs.parametrages.model.enums.IdsCategoriesEnum;
 
 /**
  * Catégorie d'opérations
@@ -57,9 +58,9 @@ public class CategorieOperation extends AbstractAPIObjectModel implements Compar
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	
-
-
+	public CategorieOperation(IdsCategoriesEnum typeCategorie){
+		this.id = typeCategorie.getId();
+	}
 	
 	/**
 	 * @return the libelle

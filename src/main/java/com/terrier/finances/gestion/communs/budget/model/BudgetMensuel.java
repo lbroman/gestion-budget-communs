@@ -1,4 +1,4 @@
-			
+
 package com.terrier.finances.gestion.communs.budget.model;
 
 import java.time.Month;
@@ -228,8 +228,8 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	public Double getMoisPrecedentMarge() {
 		return moisPrecedentMarge;
 	}
-	
-	
+
+
 	private Double margeCalculee;
 	/**
 	 * @return the margeSecurite
@@ -237,12 +237,15 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	@JsonIgnore
 	public Double getMarge() {
 		margeCalculee = this.moisPrecedentMarge;
-		this.listeOperations.stream()
+		if(!this.listeOperations.isEmpty()){
+			this.listeOperations.stream()
 			.filter(op -> IdsCategoriesEnum.RESERVE.getId().equals(op.getSsCategorie().getId()))
 			.forEach(op -> {
 				int type = TypeOperationEnum.CREDIT.equals(op.getTypeDepense()) ? 1 : -1;
 				margeCalculee = margeCalculee + type * Double.valueOf(op.getValeur());
 			});
+		}
+		System.err.println(margeCalculee);
 		return margeCalculee;
 	}
 
