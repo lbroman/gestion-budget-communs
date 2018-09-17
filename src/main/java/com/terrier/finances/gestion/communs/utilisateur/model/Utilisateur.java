@@ -34,7 +34,8 @@ public class Utilisateur implements Serializable {
 	// Login
 	private String login;
 	
-	private String hashMotDePasse;
+	// Mot de passe
+	private String password;
 
 	// Clé de chiffrement des données. Le mot de passe du user permet de la déchiffrer
 	@JsonIgnore
@@ -83,20 +84,6 @@ public class Utilisateur implements Serializable {
 	}
 
 	/**
-	 * @return the hashMotDePasse
-	 */
-	public String getHashMotDePasse() {
-		return hashMotDePasse;
-	}
-
-	/**
-	 * @param hashMotDePasse the hashMotDePasse to set
-	 */
-	public void setHashMotDePasse(String hashMotDePasse) {
-		this.hashMotDePasse = hashMotDePasse;
-	}
-
-	/**
 	 * @return the prefsUtilisateur
 	 */
 	public Map<UtilisateurPrefsEnum, String> getPrefsUtilisateur() {
@@ -110,6 +97,20 @@ public class Utilisateur implements Serializable {
 		this.prefsUtilisateur = prefsUtilisateur;
 	}
 
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	/**
 	 * @param clePreference clé d'une préférence
