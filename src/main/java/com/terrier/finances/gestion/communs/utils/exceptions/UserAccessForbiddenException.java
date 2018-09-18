@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * @author vzwingma
  *
  */
-public class UserNotAuthorizedException extends Exception {
+public class UserAccessForbiddenException extends Exception {
 
 	/**
 	 * 
@@ -20,13 +20,13 @@ public class UserNotAuthorizedException extends Exception {
 	/**
 	 * Logger
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserNotAuthorizedException.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserAccessForbiddenException.class);
 	
 	
 	/**
 	 * Constructeur
 	 */
-	public UserNotAuthorizedException(){
+	public UserAccessForbiddenException(){
 		super();
 	}
 	
@@ -34,7 +34,7 @@ public class UserNotAuthorizedException extends Exception {
 	 * Message d'erreur
 	 * @param libelleErreur
 	 */
-	public UserNotAuthorizedException(StringBuilder libelleErreur){
+	public UserAccessForbiddenException(StringBuilder libelleErreur){
 		super(libelleErreur.toString());
 		LOGGER.error("{}", libelleErreur);
 	}

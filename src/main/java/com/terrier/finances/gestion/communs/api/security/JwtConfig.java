@@ -20,6 +20,9 @@ public class JwtConfig {
 
 	public static final  String JWT_AUTH_PREFIX = "Bearer : ";
 
+	public static final String JWT_CLAIM_USERID_HEADER = "USERID";
+	
+	public static final String JWT_CLAIM_AUTORITIES_HEADER = "authorities";
 
 	public static final  int JWT_EXPIRATION_S = 86400;
 

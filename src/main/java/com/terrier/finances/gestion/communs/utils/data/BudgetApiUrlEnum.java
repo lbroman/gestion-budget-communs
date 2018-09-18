@@ -40,7 +40,7 @@ public class BudgetApiUrlEnum {
 	 * Comptes
 	 */
 	public static final String COMPTES_BASE = "/comptes/v1";
-	public static final String COMPTES_LIST = "/";
+	public static final String COMPTES_LIST = "";
 	public static final String COMPTES_LIST_FULL = COMPTES_BASE + COMPTES_LIST;
 
 	public static final String COMPTES_ID = "/{idCompte}";
