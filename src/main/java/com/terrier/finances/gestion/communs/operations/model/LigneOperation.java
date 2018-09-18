@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 import com.terrier.finances.gestion.communs.operations.model.enums.EtatOperationEnum;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
@@ -26,7 +27,12 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	// Id
 	private String id;
 	// SS Catégorie
+	private String idSsCategorie;
+
+	// SS Catégorie
+	@JsonIgnore
 	private CategorieOperation ssCategorie;
+	
 	// Libellé
 	private String libelle;
 	// Type de dépense
@@ -49,6 +55,7 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	/**
 	 * Logger
 	 */
+	@JsonIgnore
 	private static final Logger LOGGER = LoggerFactory.getLogger(LigneOperation.class);
 	
 	/**
@@ -94,32 +101,66 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 		this.id = id;
 	}
 
+
+	/**
+	 * @return the idSsCategorie
+	 */
+	public String getIdSsCategorie() {
+		return idSsCategorie;
+	}
+
 	/**
 	 * @return the ssCategorie
 	 */
+	@JsonIgnore
 	public CategorieOperation getSsCategorie() {
 		return ssCategorie;
+	}
+	/**
+	 * @return the ssCategorie
+	 */
+
+	public String getIdCategorie() {
+		return ssCategorie.getCategorieParente().getId();
+	}
+
+	/**
+	 * @return the ssCategorie
+	 */
+	@JsonIgnore
+	public CategorieOperation getCategorie() {
+		return ssCategorie.getCategorieParente();
+	}
+
+	/**
+	 * @param categorie the categorie to set
+	 */
+	@JsonIgnore
+	public void setCategorie(CategorieOperation categorie) {
+		// Ne fait rien, calculé par la sous catégorie
 	}
 
 	/**
 	 * @param ssCategorie the ssCategorie to set
 	 */
+	@JsonIgnore
 	public void setSsCategorie(CategorieOperation ssCategorie) {
-		LOGGER.trace("> MAJ de la catégorie de l'opération : {}", ssCategorie);
 		this.ssCategorie = ssCategorie;
+		this.idSsCategorie = ssCategorie.getId();
 	}
 
 	/**
-	 * @return the categorie
+	 * @param idSsCategorie the idSsCategorie to set
 	 */
-	public CategorieOperation getCategorie() {
-		return this.ssCategorie != null ? this.ssCategorie.getCategorieParente() : null;
+	public void setIdSsCategorie(String idSsCategorie) {
+		this.idSsCategorie = idSsCategorie;
 	}
-	
-	public void setCategorie(CategorieOperation categorie){
-		// Ne fais rien. Calculé par le set de Sous Categorie
+	/**
+	 * @param idCategorie the idCategorie to set
+	 */
+	public void setIdCategorie(String idCategorie) {
+		// Rien à faire. Setté par ssCategorie
 	}
-
 	/**
 	 * @return the libelle
 	 */
@@ -151,10 +192,18 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 		return valeur;
 	}
 
+	/**
+	 * @return valeur absolue pour editor
+	 */
+	@JsonIgnore
 	public String getValeurAbsStringFromDouble() {
 		return Double.toString(Math.abs(valeur));
 	}
 
+	/**
+	 * @param valeurS set valeur depuis l'editor
+	 */
+	@JsonIgnore
 	public void setValeurAbsStringToDouble(String valeurS){
 		valeurS = BudgetDataUtils.getValueFromString(valeurS);
 		if(valeurS != null){
@@ -261,7 +310,7 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("LigneOperation [uuid=").append(id).append(", ssCategorie=").append(ssCategorie).append(", libelle=")
+		builder.append("LigneOperation [uuid=").append(id).append(", idSsCategorie=").append(idSsCategorie).append(", libelle=")
 				.append(libelle).append(", typeDepense=").append(typeDepense).append(", etat=").append(etat)
 				.append(", valeur=").append(valeur).append(", dateOperation=").append(dateOperation)
 				.append(", dateMaj=").append(dateMaj).append(", auteur=").append(auteur).append(", periodique=")

@@ -12,13 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
-import com.terrier.finances.gestion.communs.api.converter.CategorieOperationsKeySerializer;
 import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
-import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
 import com.terrier.finances.gestion.communs.parametrages.model.enums.IdsCategoriesEnum;
 
 /**
@@ -63,14 +60,13 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	/**
 	 * Liste des dépenses
 	 */
-	@JsonIgnore
 	private List<LigneOperation> listeOperations = new ArrayList<>();
 
 	private transient boolean isNewBudget = false;
 
-	private Map<CategorieOperation, Double[]> totalParCategories = new HashMap<>();
+	private Map<String, Double[]> totalParCategories = new HashMap<>();
 
-	private Map<CategorieOperation, Double[]> totalParSSCategories = new HashMap<>();
+	private Map<String, Double[]> totalParSSCategories = new HashMap<>();
 
 	/**
 	 * Totaux
@@ -105,16 +101,14 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	/**
 	 * @return the totalParCategories
 	 */
-	@JsonSerialize(keyUsing = CategorieOperationsKeySerializer.class) 
-	public Map<CategorieOperation, Double[]> getTotalParCategories() {
+	public Map<String, Double[]> getTotalParCategories() {
 		return totalParCategories;
 	}
 
 	/**
 	 * @return the totalParSSCategories
-	 */
-	@JsonSerialize(keyUsing = CategorieOperationsKeySerializer.class)  
-	public Map<CategorieOperation, Double[]> getTotalParSSCategories() {
+	 */  
+	public Map<String, Double[]> getTotalParSSCategories() {
 		return totalParSSCategories;
 	}
 
@@ -245,7 +239,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 		try{
 			if(this.listeOperations != null && !this.listeOperations.isEmpty()){
 				this.listeOperations.stream()
-				.filter(op -> op.getSsCategorie() != null && IdsCategoriesEnum.RESERVE.getId().equals(op.getSsCategorie().getId()))
+				.filter(op -> IdsCategoriesEnum.RESERVE.getId().equals(op.getIdSsCategorie()))
 				.forEach(op -> {
 					int type = TypeOperationEnum.CREDIT.equals(op.getTypeDepense()) ? 1 : -1;
 					margeCalculee = margeCalculee + type * Double.valueOf(op.getValeur());
@@ -292,7 +286,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	 * @param totalParCategories the totalParCategories to set
 	 */
 	public void setTotalParCategories(
-			Map<CategorieOperation, Double[]> totalParCategories) {
+			Map<String, Double[]> totalParCategories) {
 		this.totalParCategories = totalParCategories;
 	}
 
@@ -300,7 +294,7 @@ public class BudgetMensuel extends AbstractAPIObjectModel {
 	 * @param totalParSSCategories the totalParSSCategories to set
 	 */
 	public void setTotalParSSCategories(
-			Map<CategorieOperation, Double[]> totalParSSCategories) {
+			Map<String, Double[]> totalParSSCategories) {
 		this.totalParSSCategories = totalParSSCategories;
 	}
 

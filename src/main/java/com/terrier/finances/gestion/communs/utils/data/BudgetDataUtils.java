@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
+import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
 
 /**
  * Utilitaire de data
@@ -16,11 +17,11 @@ import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
  */
 public class BudgetDataUtils {
 
-	
+
 	private BudgetDataUtils(){
 		// constructeur privé
 	}
-	
+
 	/**
 	 * @param compte compte bancaire
 	 * @param mois mois
@@ -50,7 +51,7 @@ public class BudgetDataUtils {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param budgetId id budget
 	 * @return la valeur de l'année à partir de l'id
@@ -107,5 +108,35 @@ public class BudgetDataUtils {
 			}
 		}
 		return valeurS;
+	}
+
+
+	/**
+	 * @param id id de la catégorie
+	 * @param listeCategories
+	 * @return catégorie correspondante
+	 */
+	public static CategorieOperation getCategorieById(String id, List<CategorieOperation> listeCategories){
+		CategorieOperation categorie = null;
+		if(id != null && listeCategories != null && !listeCategories.isEmpty()){
+			// Recherche parmi les catégories
+			Optional<CategorieOperation> cat = listeCategories.parallelStream()
+					.filter(c -> id.equals(c.getId()))
+					.findFirst();
+			if(cat.isPresent()){
+				categorie = cat.get();
+			}
+			// Sinon les sous catégories
+			else{
+				Optional<CategorieOperation> ssCats = listeCategories.parallelStream()
+						.flatMap(c -> c.getListeSSCategories().stream())
+						.filter(ss -> id.equals(ss.getId()))
+						.findFirst();
+				if(ssCats.isPresent()){
+					categorie = ssCats.get();
+				}
+			}
+		}
+		return categorie;
 	}
 }

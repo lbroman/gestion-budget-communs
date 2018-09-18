@@ -32,13 +32,13 @@ public class CategorieOperation extends AbstractAPIObjectModel implements Compar
 	private String libelle;
 	/**
 	 * Actif
-	 */
+	 */	
 	private boolean actif;
 	/**
 	 * Liste des sous catégories
-	 */
+	 */	
 	private Set<CategorieOperation> listeSSCategories = new HashSet<>();
-	
+
 	/**
 	 * Catégorie
 	 */
@@ -50,7 +50,7 @@ public class CategorieOperation extends AbstractAPIObjectModel implements Compar
 	 */
 	private boolean categorie = true;
 
-	
+
 	/**
 	 * Constructeur pour Spring Data MongSB
 	 */
@@ -58,10 +58,19 @@ public class CategorieOperation extends AbstractAPIObjectModel implements Compar
 		this.id = UUID.randomUUID().toString();
 	}
 	
+	/**
+	 * Constructeur pour le clone
+	 * @param id id du parent
+	 */
+	public CategorieOperation(String id){
+		this.id = id;
+	}
+
+
 	public CategorieOperation(IdsCategoriesEnum typeCategorie){
 		this.id = typeCategorie.getId();
 	}
-	
+
 	/**
 	 * @return the libelle
 	 */
@@ -76,7 +85,7 @@ public class CategorieOperation extends AbstractAPIObjectModel implements Compar
 		this.libelle = libelle;
 	}
 
-	
+
 	/**
 	 * @return the listeSSCategories
 	 */
@@ -141,7 +150,7 @@ public class CategorieOperation extends AbstractAPIObjectModel implements Compar
 	}
 
 
-	
+
 
 
 	/**
