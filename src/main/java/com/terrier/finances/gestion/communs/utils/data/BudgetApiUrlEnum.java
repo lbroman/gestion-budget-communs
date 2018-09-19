@@ -78,4 +78,15 @@ public class BudgetApiUrlEnum {
 	 */
 	public static final String BUDGET_ETAT = "/{idBudget}/etat"; 
 	public static final String BUDGET_ETAT_FULL = BUDGET_BASE + BUDGET_ETAT;
+	
+	/**
+	 * Operations
+	 */
+	public static final String BUDGET_OPERATIONS_BASE = BUDGET_ID_FULL + "/operations";
+	public static final String BUDGET_OPERATIONS_ID_FULL = BUDGET_BASE + BUDGET_OPERATIONS_BASE;
+	/*
+	 * Avec en paramètre : ?derniereOperation=true
+	 */
+	public static final String BUDGET_OPERATIONS_ID_ETAT = BUDGET_OPERATIONS_ID_FULL + "{idOperation}/etat";
+	public static final String BUDGET_OPERATIONS_ID_ETAT_FULL = BUDGET_BASE + BUDGET_OPERATIONS_ID_ETAT;
 }
