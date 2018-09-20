@@ -9,6 +9,7 @@ import java.util.Optional;
 import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
+import com.terrier.finances.gestion.communs.utils.exceptions.BudgetNotFoundException;
 
 /**
  * Utilitaire de data
@@ -35,19 +36,32 @@ public class BudgetDataUtils {
 	 * @param budgetId id budget
 	 * @return la valeur de l'année à partir de l'id
 	 */
-	public static Month getMoisFromBudgetId(String budgetId){
+	public static Month getMoisFromBudgetId(String budgetId) throws BudgetNotFoundException {
 		if(budgetId != null){
-			return Month.of(Integer.parseInt(budgetId.substring(budgetId.lastIndexOf('_') + 1, budgetId.length())));
+			try {
+				return Month.of(Integer.parseInt(budgetId.substring(budgetId.lastIndexOf('_') + 1, budgetId.length())));
+			}
+			catch (Exception e) {
+				// Erreur dans l'id
+				throw new BudgetNotFoundException("Erreur dans l'id du budget " + budgetId + ". Données incohérentes");
+			}
 		}
 		return null;
 	}
 	/**
 	 * @param budgetId id budget
 	 * @return la valeur de l'année à partir de l'id
+	 * @throws BudgetNotFoundException 
 	 */
-	public static String getCompteFromBudgetId(String budgetId){
+	public static String getCompteFromBudgetId(String budgetId) throws BudgetNotFoundException {
 		if(budgetId != null){
-			return budgetId.substring(0, budgetId.indexOf('_'));
+			try {
+				return budgetId.substring(0, budgetId.indexOf('_'));
+			}
+			catch (Exception e) {
+				// Erreur dans l'id
+				throw new BudgetNotFoundException("Erreur dans l'id du budget " + budgetId + ". Données incohérentes");
+			}
 		}
 		return null;
 	}
@@ -56,9 +70,15 @@ public class BudgetDataUtils {
 	 * @param budgetId id budget
 	 * @return la valeur de l'année à partir de l'id
 	 */
-	public static Integer getAnneeFromBudgetId(String budgetId){
+	public static Integer getAnneeFromBudgetId(String budgetId) throws BudgetNotFoundException{
 		if(budgetId != null){
-			return Integer.parseInt(budgetId.substring(budgetId.indexOf('_') + 1, budgetId.lastIndexOf('_')));
+			try {
+				return Integer.parseInt(budgetId.substring(budgetId.indexOf('_') + 1, budgetId.lastIndexOf('_')));
+			}
+			catch (Exception e) {
+				// Erreur dans l'id
+				throw new BudgetNotFoundException("Erreur dans l'id du budget " + budgetId + ". Données incohérentes");
+			}
 		}
 		return null;
 	}

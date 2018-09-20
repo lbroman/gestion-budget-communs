@@ -68,25 +68,22 @@ public class BudgetApiUrlEnum {
 	public static final String BUDGET_ID = "/{idBudget}";
 	public static final String BUDGET_ID_FULL = BUDGET_BASE + BUDGET_ID;
 
-	/*
-	 * Avec en paramètre ?idCompte={idCompte}&mois={mois}&annee={annee}
-	 */
+	// Avec en paramètre ?idCompte={idCompte}&mois={mois}&annee={annee}
 	public static final String BUDGET_QUERY = "/query"; 
 	public static final String BUDGET_QUERY_FULL = BUDGET_BASE + BUDGET_QUERY;
-	/*
-	 * Avec en paramètres :  ?actif=true  ou ?uptodateto=long
-	 */
+	// Avec en paramètres :  ?actif=true  ou ?uptodateto=long
 	public static final String BUDGET_ETAT = "/{idBudget}/etat"; 
 	public static final String BUDGET_ETAT_FULL = BUDGET_BASE + BUDGET_ETAT;
 	
 	/**
 	 * Operations
 	 */
-	public static final String BUDGET_OPERATIONS_BASE = BUDGET_ID_FULL + "/operations";
-	public static final String BUDGET_OPERATIONS_ID_FULL = BUDGET_BASE + BUDGET_OPERATIONS_BASE;
-	/*
-	 * Avec en paramètre : ?derniereOperation=true
-	 */
-	public static final String BUDGET_OPERATIONS_ID_ETAT = BUDGET_OPERATIONS_ID_FULL + "{idOperation}/etat";
-	public static final String BUDGET_OPERATIONS_ID_ETAT_FULL = BUDGET_BASE + BUDGET_OPERATIONS_ID_ETAT;
+	public static final String BUDGET_OPERATIONS_BASE = BUDGET_ID + "/operations";
+	public static final String BUDGET_OPERATIONS_FULL = BUDGET_BASE + BUDGET_OPERATIONS_BASE;
+
+	public static final String BUDGET_OPERATIONS_ID = BUDGET_OPERATIONS_BASE + "/{idOperation}";
+	public static final String BUDGET_OPERATIONS_ID_FULL = BUDGET_BASE + BUDGET_OPERATIONS_ID;	
+
+	public static final String BUDGET_OPERATIONS_ID_DERNIERE = BUDGET_OPERATIONS_ID + "/derniereOperation";
+	public static final String BUDGET_OPERATIONS_ID_DERNIERE_FULL = BUDGET_BASE + BUDGET_OPERATIONS_ID_DERNIERE;
 }

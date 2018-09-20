@@ -18,6 +18,7 @@ import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
 import com.terrier.finances.gestion.communs.utils.data.BudgetDataUtils;
+import com.terrier.finances.gestion.communs.utils.exceptions.BudgetNotFoundException;
 
 public class TestBudgetDataUtils {
 
@@ -65,7 +66,7 @@ public class TestBudgetDataUtils {
 	
 	
 	@Test
-	public void getAnneeFromBudgetId(){
+	public void getAnneeFromBudgetId() throws BudgetNotFoundException{
 		String id1 = "ING_2018_1";
 		
 		assertEquals(Integer.valueOf(2018), BudgetDataUtils.getAnneeFromBudgetId(id1));
