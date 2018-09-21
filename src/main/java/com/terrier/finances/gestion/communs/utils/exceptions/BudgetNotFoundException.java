@@ -3,27 +3,24 @@
  */
 package com.terrier.finances.gestion.communs.utils.exceptions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Budget non trouvé
  * @author vzwingma
  *
  */
-public class BudgetNotFoundException extends Exception {
+public class BudgetNotFoundException extends AbstractBusinessException {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 873736486722763673L;
+	private static final long serialVersionUID = 7444641623195237945L;
+
 	/**
-	 * Logger
+	 * Exception Budget introuvable
+	 * @param libelleErreur
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(BudgetNotFoundException.class);
-	
-	
-	public BudgetNotFoundException(String libelleErreur){
-		LOGGER.error("{}", libelleErreur);
+	public BudgetNotFoundException(String libelleErreur) {
+		super(libelleErreur);
 	}
+
 }

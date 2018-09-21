@@ -30,11 +30,22 @@ public class BudgetDataUtils {
 	 * @return id de budget
 	 */
 	public static String getBudgetId(CompteBancaire compte, Month mois, int annee){
-		return new StringBuilder().append(compte.getId()).append("_").append(annee).append("_").append(mois.getValue()).toString();
+		return getBudgetId(compte.getId(), mois, annee);
+	}
+	
+	/**
+	 * @param idCompte id compte bancaire
+	 * @param mois mois
+	 * @param annee année
+	 * @return id de budget
+	 */
+	public static String getBudgetId(String idCompte, Month mois, int annee){
+		return new StringBuilder().append(idCompte).append("_").append(annee).append("_").append(mois.getValue()).toString();
 	}
 	/**
 	 * @param budgetId id budget
 	 * @return la valeur de l'année à partir de l'id
+	 * @throws BudgetNotFoundException budget introuvable car erreur d'id
 	 */
 	public static Month getMoisFromBudgetId(String budgetId) throws BudgetNotFoundException {
 		if(budgetId != null){
@@ -51,7 +62,7 @@ public class BudgetDataUtils {
 	/**
 	 * @param budgetId id budget
 	 * @return la valeur de l'année à partir de l'id
-	 * @throws BudgetNotFoundException 
+	 * @throws BudgetNotFoundException budget introuvable car erreur d'id
 	 */
 	public static String getCompteFromBudgetId(String budgetId) throws BudgetNotFoundException {
 		if(budgetId != null){
@@ -69,6 +80,7 @@ public class BudgetDataUtils {
 	/**
 	 * @param budgetId id budget
 	 * @return la valeur de l'année à partir de l'id
+	 * @throws BudgetNotFoundException budget introuvable car erreur d'id
 	 */
 	public static Integer getAnneeFromBudgetId(String budgetId) throws BudgetNotFoundException{
 		if(budgetId != null){

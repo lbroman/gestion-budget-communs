@@ -3,39 +3,23 @@
  */
 package com.terrier.finances.gestion.communs.utils.exceptions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Utilisateur non autorisé
+ * Utilisateur non authentifié
  * @author vzwingma
  *
  */
-public class UserAccessForbiddenException extends Exception {
+public class UserAccessForbiddenException extends AbstractBusinessException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5428709492299879225L;
-	/**
-	 * Logger
-	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserAccessForbiddenException.class);
-	
-	
-	/**
-	 * Constructeur
-	 */
-	public UserAccessForbiddenException(){
-		super();
-	}
 	
 	/**
 	 * Message d'erreur
-	 * @param libelleErreur
+	 * @param libelleErreur libellé de l'erreur
 	 */
-	public UserAccessForbiddenException(StringBuilder libelleErreur){
-		super(libelleErreur.toString());
-		LOGGER.error("{}", libelleErreur);
+	public UserAccessForbiddenException(String libelleErreur){
+		super(libelleErreur);
 	}
 }
