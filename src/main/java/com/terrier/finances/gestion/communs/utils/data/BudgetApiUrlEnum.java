@@ -78,12 +78,12 @@ public class BudgetApiUrlEnum {
 	/**
 	 * Operations
 	 */
-	public static final String BUDGET_OPERATIONS_BASE = BUDGET_ID + "/operations";
-	public static final String BUDGET_OPERATIONS_FULL = BUDGET_BASE + BUDGET_OPERATIONS_BASE;
+	public static final String BUDGET_OPERATION = BUDGET_ID + "/operations/{idOperation}";
+	public static final String BUDGET_OPERATION_FULL = BUDGET_BASE + BUDGET_OPERATION;	
 
-	public static final String BUDGET_OPERATIONS_ID = BUDGET_OPERATIONS_BASE + "/{idOperation}";
-	public static final String BUDGET_OPERATIONS_ID_FULL = BUDGET_BASE + BUDGET_OPERATIONS_ID;	
-
-	public static final String BUDGET_OPERATIONS_ID_DERNIERE = BUDGET_OPERATIONS_ID + "/derniereOperation";
-	public static final String BUDGET_OPERATIONS_ID_DERNIERE_FULL = BUDGET_BASE + BUDGET_OPERATIONS_ID_DERNIERE;
+	public static final String BUDGET_OPERATION_DERNIERE = BUDGET_OPERATION + "/derniereOperation";
+	public static final String BUDGET_OPERATION_DERNIERE_FULL = BUDGET_BASE + BUDGET_OPERATION_DERNIERE;
+	
+	public static final String BUDGET_OPERATION_INTERCOMPTE = BUDGET_OPERATION + "/versCompte/{idCompte}";
+	public static final String BUDGET_OPERATION_INTERCOMPTE_FULL = BUDGET_BASE + BUDGET_OPERATION_INTERCOMPTE;
 }
