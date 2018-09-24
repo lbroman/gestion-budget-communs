@@ -71,7 +71,7 @@ public class BudgetApiUrlEnum {
 	 * Budget
 	 */
 	public static final String BUDGET_BASE = "/budgets/v1";	
-	public static final String BUDGET_ID = URL_PARAM_ID_BUDGET;
+	public static final String BUDGET_ID = "/"+ URL_PARAM_ID_BUDGET;
 	public static final String BUDGET_ID_FULL = BUDGET_BASE + BUDGET_ID;
 
 	// Avec en paramètre
