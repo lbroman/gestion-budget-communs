@@ -1,12 +1,13 @@
 package com.terrier.finances.gestion.communs.api.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -58,9 +59,12 @@ public class TestJwt {
 	}
 	
 
-	@Test(expected=SignatureException.class)
+	@Test
 	public void testParseInvalidToken(){
 		assertNotNull(TestJwt.INVALID_SIGNATURE);
-		JwtConfig.getJWTClaims(TestJwt.INVALID_SIGNATURE);
+		
+		assertThrows(SignatureException.class, () -> {
+			JwtConfig.getJWTClaims(TestJwt.INVALID_SIGNATURE);
+		});
 	}
 }
