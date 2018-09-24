@@ -11,6 +11,12 @@ public class BudgetApiUrlEnum {
 	private BudgetApiUrlEnum(){
 		// Constructeur privé pour une classe enum
 	}
+	
+	public static final String URL_PARAM_ID_BUDGET = "{idBudget}";
+	public static final String URL_PARAM_ID_COMPTE = "{idCompte}";
+	public static final String URL_PARAM_ID_OPERATION = "{idOperation}";
+	
+	
 	/**
 	 * Statut
 	 */
@@ -43,13 +49,13 @@ public class BudgetApiUrlEnum {
 	public static final String COMPTES_LIST = "";
 	public static final String COMPTES_LIST_FULL = COMPTES_BASE + COMPTES_LIST;
 
-	public static final String COMPTES_ID = "/{idCompte}";
+	public static final String COMPTES_ID = "/"+URL_PARAM_ID_COMPTE;
 	public static final String COMPTES_ID_FULL = COMPTES_BASE + COMPTES_ID;
 
-	public static final String COMPTES_INTERVALLES = "/{idCompte}/intervalles";
+	public static final String COMPTES_INTERVALLES = "/"+URL_PARAM_ID_COMPTE+"/intervalles";
 	public static final String COMPTES_INTERVALLES_FULL = COMPTES_BASE + COMPTES_INTERVALLES;
 	
-	public static final String COMPTES_OPERATIONS_LIBELLES = "/{idCompte}/operations/libelles";
+	public static final String COMPTES_OPERATIONS_LIBELLES = "/"+URL_PARAM_ID_COMPTE+"/operations/libelles";
 	public static final String COMPTES_OPERATIONS_LIBELLES_FULL = COMPTES_BASE + COMPTES_OPERATIONS_LIBELLES;
 	
 	
@@ -65,25 +71,25 @@ public class BudgetApiUrlEnum {
 	 * Budget
 	 */
 	public static final String BUDGET_BASE = "/budgets/v1";	
-	public static final String BUDGET_ID = "/{idBudget}";
+	public static final String BUDGET_ID = URL_PARAM_ID_BUDGET;
 	public static final String BUDGET_ID_FULL = BUDGET_BASE + BUDGET_ID;
 
-	// Avec en paramètre ?idCompte={idCompte}&mois={mois}&annee={annee}
+	// Avec en paramètre ?idCompte="+URL_PARAM_ID_COMPTE+"&mois={mois}&annee={annee}
 	public static final String BUDGET_QUERY = "/query"; 
 	public static final String BUDGET_QUERY_FULL = BUDGET_BASE + BUDGET_QUERY;
 	// Avec en paramètres :  ?actif=true  ou ?uptodateto=long
-	public static final String BUDGET_ETAT = "/{idBudget}/etat"; 
+	public static final String BUDGET_ETAT = "/"+URL_PARAM_ID_BUDGET+"/etat"; 
 	public static final String BUDGET_ETAT_FULL = BUDGET_BASE + BUDGET_ETAT;
 	
 	/**
 	 * Operations
 	 */
-	public static final String BUDGET_OPERATION = BUDGET_ID + "/operations/{idOperation}";
+	public static final String BUDGET_OPERATION = BUDGET_ID + "/operations/"+URL_PARAM_ID_OPERATION;
 	public static final String BUDGET_OPERATION_FULL = BUDGET_BASE + BUDGET_OPERATION;	
 
 	public static final String BUDGET_OPERATION_DERNIERE = BUDGET_OPERATION + "/derniereOperation";
 	public static final String BUDGET_OPERATION_DERNIERE_FULL = BUDGET_BASE + BUDGET_OPERATION_DERNIERE;
 	
-	public static final String BUDGET_OPERATION_INTERCOMPTE = BUDGET_OPERATION + "/versCompte/{idCompte}";
+	public static final String BUDGET_OPERATION_INTERCOMPTE = BUDGET_OPERATION + "/versCompte/"+URL_PARAM_ID_COMPTE;
 	public static final String BUDGET_OPERATION_INTERCOMPTE_FULL = BUDGET_BASE + BUDGET_OPERATION_INTERCOMPTE;
 }
