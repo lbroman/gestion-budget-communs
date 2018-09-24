@@ -16,7 +16,7 @@ public class AbstractBusinessException extends Exception {
 	/**
 	 * Logger
 	 */
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public AbstractBusinessException(String libelleErreur){
 		logger.error("{}", libelleErreur);
