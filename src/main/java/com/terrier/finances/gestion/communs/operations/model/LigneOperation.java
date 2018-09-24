@@ -32,7 +32,7 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	// SS Catégorie
 	@JsonIgnore
 	private CategorieOperation ssCategorie;
-	
+
 	// Libellé
 	private String libelle;
 	// Type de dépense
@@ -57,14 +57,14 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	 */
 	@JsonIgnore
 	private static final Logger LOGGER = LoggerFactory.getLogger(LigneOperation.class);
-	
+
 	/**
 	 * Constructeur par défaut
 	 */
 	public LigneOperation(){
 		// Constructeur pour Spring		
 	}
-	
+
 	/**
 	 * Constructeur
 	 * @param ssCategorie Catégorie
@@ -85,7 +85,7 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 		this.periodique = periodique;
 		this.derniereOperation = false;
 	}
-	
+
 
 	/**
 	 * @return the id
@@ -121,7 +121,10 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	 */
 
 	public String getIdCategorie() {
-		return ssCategorie.getCategorieParente().getId();
+		if(ssCategorie != null && ssCategorie.getCategorieParente() != null) {
+			return ssCategorie.getCategorieParente().getId();
+		}
+		return null;
 	}
 
 	/**
@@ -280,7 +283,7 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	public void setPeriodique(boolean periodique) {
 		this.periodique = periodique;
 	}
-	
+
 
 	/**
 	 * @param periodique the periodique to set
@@ -303,7 +306,7 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 		this.derniereOperation = derniereOperation;
 	}	
 
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -311,10 +314,10 @@ public class LigneOperation extends AbstractAPIObjectModel implements Comparable
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LigneOperation [uuid=").append(id).append(", idSsCategorie=").append(idSsCategorie).append(", libelle=")
-				.append(libelle).append(", typeDepense=").append(typeDepense).append(", etat=").append(etat)
-				.append(", valeur=").append(valeur).append(", dateOperation=").append(dateOperation)
-				.append(", dateMaj=").append(dateMaj).append(", auteur=").append(auteur).append(", periodique=")
-				.append(periodique).append(", derniereOperation=").append(derniereOperation).append("]");
+		.append(libelle).append(", typeDepense=").append(typeDepense).append(", etat=").append(etat)
+		.append(", valeur=").append(valeur).append(", dateOperation=").append(dateOperation)
+		.append(", dateMaj=").append(dateMaj).append(", auteur=").append(auteur).append(", periodique=")
+		.append(periodique).append(", derniereOperation=").append(derniereOperation).append("]");
 		return builder.toString();
 	}
 
