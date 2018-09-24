@@ -17,10 +17,10 @@ public class TestBudgetMensuel {
 		
 		BudgetMensuel b = new BudgetMensuel();
 		
-		assertEquals(0D, b.getMarge().doubleValue(), 0);
+		assertEquals(0, b.getMarge().intValue());
 		
 		b.setResultatMoisPrecedent(100D, 200D);
-		assertEquals(200D, b.getMarge().doubleValue(), 0);
+		assertEquals(200, b.getMarge().intValue());
 		
 		LigneOperation o = new LigneOperation();
 		o.setSsCategorie(new CategorieOperation(IdsCategoriesEnum.SALAIRE));
@@ -28,13 +28,13 @@ public class TestBudgetMensuel {
 		o.setTypeDepense(TypeOperationEnum.CREDIT);
 		b.getListeOperations().add(o);
 		
-		assertEquals(200D, b.getMarge().doubleValue(), 0);
+		assertEquals(200, b.getMarge().intValue());
 		
 		LigneOperation o2 = new LigneOperation();
 		o2.setSsCategorie(new CategorieOperation(IdsCategoriesEnum.RESERVE));
 		o2.setValeurAbsStringToDouble("123");
 		o2.setTypeDepense(TypeOperationEnum.CREDIT);
 		b.getListeOperations().add(o2);
-		assertEquals(323D, b.getMarge().doubleValue(), 0);
+		assertEquals(323, b.getMarge().intValue());
 	}
 }
