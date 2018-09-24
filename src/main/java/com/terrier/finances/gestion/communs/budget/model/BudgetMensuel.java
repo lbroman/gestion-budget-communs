@@ -1,23 +1,21 @@
-			
+
 package com.terrier.finances.gestion.communs.budget.model;
 
-import java.io.Serializable;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 import com.terrier.finances.gestion.communs.comptes.model.CompteBancaire;
 import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
-import com.terrier.finances.gestion.communs.parametrages.model.CategorieDepense;
 import com.terrier.finances.gestion.communs.parametrages.model.enums.IdsCategoriesEnum;
 
 /**
@@ -25,17 +23,16 @@ import com.terrier.finances.gestion.communs.parametrages.model.enums.IdsCategori
  * @author vzwingma
  *
  */
-public class BudgetMensuel implements Serializable {
+public class BudgetMensuel extends AbstractAPIObjectModel {
 
 	private String id;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4393433203514049021L;
-	/**
-	 * Logger
-	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(BudgetMensuel.class);
+
+	@JsonIgnore
+	private static final transient Logger LOGGER = LoggerFactory.getLogger( BudgetMensuel.class );
 	/**
 	 * Mois du budget
 	 */
@@ -58,21 +55,18 @@ public class BudgetMensuel implements Serializable {
 	 */
 	private Double moisPrecedentResultat;
 
-	private Double margeMoisPrecedent = 0D;
+	private Double moisPrecedentMarge = 0D;
 
 	/**
 	 * Liste des dépenses
 	 */
 	private List<LigneOperation> listeOperations = new ArrayList<>();
-	/** 
-	 * Liste des libellés pour l'autocomplétion
-	 */
-	private transient Set<String> setLibellesDepensesForAutocomplete= new TreeSet<>();
 
 	private transient boolean isNewBudget = false;
-	
-	private Map<CategorieDepense, Double[]> totalParCategories = new HashMap<>();
-	private Map<CategorieDepense, Double[]> totalParSSCategories = new HashMap<>();
+
+	private Map<String, Double[]> totalParCategories = new HashMap<>();
+
+	private Map<String, Double[]> totalParSSCategories = new HashMap<>();
 
 	/**
 	 * Totaux
@@ -86,7 +80,6 @@ public class BudgetMensuel implements Serializable {
 	public void razCalculs(){
 		totalParCategories.clear();
 		totalParSSCategories.clear();
-		LOGGER.debug("Raz des calculs du budget");
 		soldeNow = this.moisPrecedentResultat;
 		soldeFin = this.moisPrecedentResultat;
 	}
@@ -108,14 +101,14 @@ public class BudgetMensuel implements Serializable {
 	/**
 	 * @return the totalParCategories
 	 */
-	public Map<CategorieDepense, Double[]> getTotalParCategories() {
+	public Map<String, Double[]> getTotalParCategories() {
 		return totalParCategories;
 	}
 
 	/**
 	 * @return the totalParSSCategories
-	 */
-	public Map<CategorieDepense, Double[]> getTotalParSSCategories() {
+	 */  
+	public Map<String, Double[]> getTotalParSSCategories() {
 		return totalParSSCategories;
 	}
 
@@ -129,6 +122,7 @@ public class BudgetMensuel implements Serializable {
 	/**
 	 * @return the nowCompteReel
 	 */
+	@JsonIgnore
 	public double getSoldeReelNow() {
 		return soldeNow + getMarge();
 	}
@@ -143,6 +137,7 @@ public class BudgetMensuel implements Serializable {
 	/**
 	 * @return the finCompteReel
 	 */
+	@JsonIgnore
 	public double getSoldeReelFin() {
 		return soldeFin + getMarge();
 	}
@@ -199,13 +194,15 @@ public class BudgetMensuel implements Serializable {
 	}
 
 	/**
+	 * Mise à jour des valeurs depuis le mois précédent
 	 * @param resultatMoisPrecedent the resultatMoisPrecedent to set
+	 * @param margeMoisPrecedent marge mois précédent
 	 */
 	public void setResultatMoisPrecedent(Double resultatMoisPrecedent, Double margeMoisPrecedent) {
 		this.moisPrecedentResultat = resultatMoisPrecedent;
 		this.soldeFin = resultatMoisPrecedent;
 		this.soldeNow = resultatMoisPrecedent;
-		this.margeMoisPrecedent = margeMoisPrecedent;
+		this.moisPrecedentMarge = margeMoisPrecedent;
 		this.margeCalculee = margeMoisPrecedent;
 	}
 
@@ -228,22 +225,30 @@ public class BudgetMensuel implements Serializable {
 	 * @return the margeSecurite
 	 */
 	public Double getMoisPrecedentMarge() {
-		return margeMoisPrecedent;
+		return moisPrecedentMarge;
 	}
-	
-	
+
+
 	private Double margeCalculee;
 	/**
 	 * @return the margeSecurite
 	 */
+	@JsonIgnore
 	public Double getMarge() {
-		margeCalculee = this.margeMoisPrecedent;
-		this.listeOperations.stream()
-			.filter(op -> IdsCategoriesEnum.RESERVE.getId().equals(op.getSsCategorie().getId()))
-			.forEach(op -> {
-				int type = TypeOperationEnum.CREDIT.equals(op.getTypeDepense()) ? 1 : -1;
-				margeCalculee = margeCalculee + type * Double.valueOf(op.getValeur());
-			});
+		margeCalculee = this.moisPrecedentMarge;
+		try{
+			if(this.listeOperations != null && !this.listeOperations.isEmpty()){
+				this.listeOperations.stream()
+				.filter(op -> IdsCategoriesEnum.RESERVE.getId().equals(op.getIdSsCategorie()))
+				.forEach(op -> {
+					int type = TypeOperationEnum.CREDIT.equals(op.getTypeDepense()) ? 1 : -1;
+					margeCalculee = margeCalculee + type * Double.valueOf(op.getValeur());
+				});
+			}
+		}
+		catch(Exception e){
+			LOGGER.warn("Erreur lors du calcul de la marge à partir des opérations {}. La marge du mois précédent est reportée [{}]", this.listeOperations, this.moisPrecedentMarge, e);
+		}
 		return margeCalculee;
 	}
 
@@ -281,7 +286,7 @@ public class BudgetMensuel implements Serializable {
 	 * @param totalParCategories the totalParCategories to set
 	 */
 	public void setTotalParCategories(
-			Map<CategorieDepense, Double[]> totalParCategories) {
+			Map<String, Double[]> totalParCategories) {
 		this.totalParCategories = totalParCategories;
 	}
 
@@ -289,12 +294,12 @@ public class BudgetMensuel implements Serializable {
 	 * @param totalParSSCategories the totalParSSCategories to set
 	 */
 	public void setTotalParSSCategories(
-			Map<CategorieDepense, Double[]> totalParSSCategories) {
+			Map<String, Double[]> totalParSSCategories) {
 		this.totalParSSCategories = totalParSSCategories;
 	}
 
 	/**
-	 * @param nowArgentAvance the nowArgentAvance to set
+	 * @param soldeNow the soldeNow to set
 	 */
 	public void setSoldeNow(Double soldeNow) {
 		this.soldeNow = soldeNow;
@@ -302,7 +307,7 @@ public class BudgetMensuel implements Serializable {
 
 
 	/**
-	 * @param finArgentAvance the finArgentAvance to set
+	 * @param soldeFin the soldeFin to set
 	 */
 	public void setSoldeFin(Double soldeFin) {
 		this.soldeFin = soldeFin;
@@ -323,14 +328,6 @@ public class BudgetMensuel implements Serializable {
 		this.actif = actif;
 	}
 
-	/**
-	 * @return the listeLibellesDepenses
-	 */
-	public Set<String> getSetLibellesDepensesForAutocomplete() {
-		return setLibellesDepensesForAutocomplete;
-	}
-	
-	
 
 	/**
 	 * @return the isNewBudget

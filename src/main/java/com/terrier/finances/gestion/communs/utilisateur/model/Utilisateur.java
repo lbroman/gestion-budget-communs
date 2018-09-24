@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.utilisateur.enums.UtilisateurDroitsEnum;
 import com.terrier.finances.gestion.communs.utilisateur.enums.UtilisateurPrefsEnum;
-import com.terrier.finances.gestion.communs.utils.data.DataUtils;
+import com.terrier.finances.gestion.communs.utils.data.BudgetDateTimeUtils;
 
 /**
  * Définition d'un utilisateur de la BDD
@@ -34,7 +34,8 @@ public class Utilisateur implements Serializable {
 	// Login
 	private String login;
 	
-	private String hashMotDePasse;
+	// Mot de passe
+	private String password;
 
 	// Clé de chiffrement des données. Le mot de passe du user permet de la déchiffrer
 	@JsonIgnore
@@ -83,20 +84,6 @@ public class Utilisateur implements Serializable {
 	}
 
 	/**
-	 * @return the hashMotDePasse
-	 */
-	public String getHashMotDePasse() {
-		return hashMotDePasse;
-	}
-
-	/**
-	 * @param hashMotDePasse the hashMotDePasse to set
-	 */
-	public void setHashMotDePasse(String hashMotDePasse) {
-		this.hashMotDePasse = hashMotDePasse;
-	}
-
-	/**
 	 * @return the prefsUtilisateur
 	 */
 	public Map<UtilisateurPrefsEnum, String> getPrefsUtilisateur() {
@@ -110,7 +97,24 @@ public class Utilisateur implements Serializable {
 		this.prefsUtilisateur = prefsUtilisateur;
 	}
 
+
 	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @param clePreference clé d'une préférence
+	 * @param <T> Type de la préférence
 	 * @return the preferences
 	 */
 	@SuppressWarnings("unchecked")
@@ -190,7 +194,7 @@ public class Utilisateur implements Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Utilisateur [login=").append(login)
 				.append(", dateDernierAcces=")
-				.append(dernierAcces != null ? DataUtils.getLibelleDate(dernierAcces) : "nulle").append(", libelle=").append(libelle)
+				.append(dernierAcces != null ? BudgetDateTimeUtils.getLibelleDate(dernierAcces) : "nulle").append(", libelle=").append(libelle)
 				.append("]");
 		return builder.toString();
 	}

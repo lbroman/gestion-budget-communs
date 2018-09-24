@@ -5,18 +5,17 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
+import com.terrier.finances.gestion.communs.parametrages.model.enums.IdsCategoriesEnum;
 
 /**
- * Catégorie de dépense
+ * Catégorie d'opérations
  * @author vzwingma
  *
  */
-@Document(collection = "ParamCategoriesDepenses")
-public class CategorieDepense extends AbstractAPIObjectModel implements Comparable<CategorieDepense> {
+public class CategorieOperation extends AbstractAPIObjectModel implements Comparable<CategorieOperation> {
 
 	/**
 	 * 
@@ -33,45 +32,45 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	private String libelle;
 	/**
 	 * Actif
-	 */
+	 */	
 	private boolean actif;
 	/**
 	 * Liste des sous catégories
-	 */
-	@Transient
-	private Set<CategorieDepense> listeSSCategories = new HashSet<>();
-	
-	/**
-	 * Liste des id des sous catégories
-	 */
-	private Set<String> listeIdsSSCategories = new HashSet<>();
+	 */	
+	private Set<CategorieOperation> listeSSCategories = new HashSet<>();
+
 	/**
 	 * Catégorie
 	 */
-	@Transient
-	private CategorieDepense categorieParente;
-	
-	/**
-	 * Catégorie parente
-	 */
-	private String idCategorieParente;
+	@JsonIgnore
+	private CategorieOperation categorieParente;
+
 	/**
 	 * Est ce une catégorie ?
 	 */
 	private boolean categorie = true;
 
-	
+
 	/**
 	 * Constructeur pour Spring Data MongSB
 	 */
-	public CategorieDepense(){
+	public CategorieOperation(){
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	
+	/**
+	 * Constructeur pour le clone
+	 * @param id id du parent
+	 */
+	public CategorieOperation(String id){
+		this.id = id;
+	}
 
 
-	
+	public CategorieOperation(IdsCategoriesEnum typeCategorie){
+		this.id = typeCategorie.getId();
+	}
+
 	/**
 	 * @return the libelle
 	 */
@@ -86,11 +85,11 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 		this.libelle = libelle;
 	}
 
-	
+
 	/**
 	 * @return the listeSSCategories
 	 */
-	public Set<CategorieDepense> getListeSSCategories() {
+	public Set<CategorieOperation> getListeSSCategories() {
 		return listeSSCategories;
 	}
 
@@ -98,30 +97,9 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	/**
 	 * @return the categorieParente
 	 */
-	public CategorieDepense getCategorieParente() {
+	public CategorieOperation getCategorieParente() {
 		return categorieParente;
 	}
-
-
-
-	/**
-	 * @param listeIdsSSCategories the listeIdsSSCategories to set
-	 */
-	public void setListeIdsSSCategories(Set<String> listeIdsSSCategories) {
-		this.listeIdsSSCategories = listeIdsSSCategories;
-	}
-
-
-
-
-	/**
-	 * @param idCategorieParente the idCategorieParente to set
-	 */
-	public void setIdCategorieParente(String idCategorieParente) {
-		this.idCategorieParente = idCategorieParente;
-	}
-
-
 
 
 	/**
@@ -155,7 +133,7 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	}
 
 	/**
-	 * @param idf the idf to set
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -172,38 +150,15 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	}
 
 
-	
+
 
 
 	/**
 	 * @param categorieParente the categorieParente to set
 	 */
-	public void setCategorieParente(CategorieDepense categorieParente) {
+	public void setCategorieParente(CategorieOperation categorieParente) {
 		this.categorieParente = categorieParente;
 	}
-
-
-
-
-
-	/**
-	 * @return the listeIdsSSCategories
-	 */
-	public Set<String> getListeIdsSSCategories() {
-		return listeIdsSSCategories;
-	}
-
-
-
-
-
-	/**
-	 * @return the idCategorieParente
-	 */
-	public String getIdCategorieParente() {
-		return idCategorieParente;
-	}
-
 
 
 
@@ -245,10 +200,10 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof CategorieDepense)) {
+		if (!(obj instanceof CategorieOperation)) {
 			return false;
 		}
-		CategorieDepense other = (CategorieDepense) obj;
+		CategorieOperation other = (CategorieOperation) obj;
 		if (id == null) {
 			if (other.id != null) {
 				return false;
@@ -274,7 +229,7 @@ public class CategorieDepense extends AbstractAPIObjectModel implements Comparab
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(CategorieDepense o) {
+	public int compareTo(CategorieOperation o) {
 		if(o != null){
 			return this.libelle.compareTo(o.getLibelle());
 		}

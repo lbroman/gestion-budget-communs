@@ -1,18 +1,18 @@
 package com.terrier.finances.gestion.communs.operations.model;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.annotation.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.terrier.finances.gestion.communs.abstrait.AbstractAPIObjectModel;
 import com.terrier.finances.gestion.communs.operations.model.enums.EtatOperationEnum;
 import com.terrier.finances.gestion.communs.operations.model.enums.TypeOperationEnum;
-import com.terrier.finances.gestion.communs.parametrages.model.CategorieDepense;
-import com.terrier.finances.gestion.communs.utils.data.DataUtils;
+import com.terrier.finances.gestion.communs.parametrages.model.CategorieOperation;
+import com.terrier.finances.gestion.communs.utils.data.BudgetDataUtils;
 
 /**
  * 
@@ -20,15 +20,19 @@ import com.terrier.finances.gestion.communs.utils.data.DataUtils;
  * @author vzwingma
  *
  */
-public class LigneOperation implements Comparable<LigneOperation>, Serializable {
+public class LigneOperation extends AbstractAPIObjectModel implements Comparable<LigneOperation> {
 
 	//
 	private static final long serialVersionUID = -5020058513824102750L;
 	// Id
 	private String id;
 	// SS Catégorie
-	@Transient
-	private CategorieDepense ssCategorie;
+	private String idSsCategorie;
+
+	// SS Catégorie
+	@JsonIgnore
+	private CategorieOperation ssCategorie;
+
 	// Libellé
 	private String libelle;
 	// Type de dépense
@@ -51,15 +55,16 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 	/**
 	 * Logger
 	 */
+	@JsonIgnore
 	private static final Logger LOGGER = LoggerFactory.getLogger(LigneOperation.class);
-	
+
 	/**
 	 * Constructeur par défaut
 	 */
 	public LigneOperation(){
 		// Constructeur pour Spring		
 	}
-	
+
 	/**
 	 * Constructeur
 	 * @param ssCategorie Catégorie
@@ -67,8 +72,9 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 	 * @param typeDepense type d'opération
 	 * @param absValeur valeur montant en valeur absolue
 	 * @param etat état
+	 * @param periodique périodicité de l'opération
 	 */
-	public LigneOperation(CategorieDepense ssCategorie, String libelle, TypeOperationEnum typeDepense, String absValeur, EtatOperationEnum etat, boolean periodique){
+	public LigneOperation(CategorieOperation ssCategorie, String libelle, TypeOperationEnum typeDepense, String absValeur, EtatOperationEnum etat, boolean periodique){
 		this.id = UUID.randomUUID().toString();
 		setSsCategorie(ssCategorie);
 		this.libelle = libelle;
@@ -79,7 +85,7 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 		this.periodique = periodique;
 		this.derniereOperation = false;
 	}
-	
+
 
 	/**
 	 * @return the id
@@ -95,32 +101,69 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 		this.id = id;
 	}
 
+
+	/**
+	 * @return the idSsCategorie
+	 */
+	public String getIdSsCategorie() {
+		return idSsCategorie;
+	}
+
 	/**
 	 * @return the ssCategorie
 	 */
-	public CategorieDepense getSsCategorie() {
+	@JsonIgnore
+	public CategorieOperation getSsCategorie() {
 		return ssCategorie;
+	}
+	/**
+	 * @return the ssCategorie
+	 */
+
+	public String getIdCategorie() {
+		if(ssCategorie != null && ssCategorie.getCategorieParente() != null) {
+			return ssCategorie.getCategorieParente().getId();
+		}
+		return null;
+	}
+
+	/**
+	 * @return the ssCategorie
+	 */
+	@JsonIgnore
+	public CategorieOperation getCategorie() {
+		return ssCategorie.getCategorieParente();
+	}
+
+	/**
+	 * @param categorie the categorie to set
+	 */
+	@JsonIgnore
+	public void setCategorie(CategorieOperation categorie) {
+		// Ne fait rien, calculé par la sous catégorie
 	}
 
 	/**
 	 * @param ssCategorie the ssCategorie to set
 	 */
-	public void setSsCategorie(CategorieDepense ssCategorie) {
-		LOGGER.trace("> MAJ de la catégorie de l'opération : {}", ssCategorie);
+	@JsonIgnore
+	public void setSsCategorie(CategorieOperation ssCategorie) {
 		this.ssCategorie = ssCategorie;
+		this.idSsCategorie = ssCategorie.getId();
 	}
 
 	/**
-	 * @return the categorie
+	 * @param idSsCategorie the idSsCategorie to set
 	 */
-	public CategorieDepense getCategorie() {
-		return this.ssCategorie != null ? this.ssCategorie.getCategorieParente() : null;
+	public void setIdSsCategorie(String idSsCategorie) {
+		this.idSsCategorie = idSsCategorie;
 	}
-	
-	public void setCategorie(CategorieDepense categorie){
-		// Ne fais rien. Calculé par le set de Sous Categorie
+	/**
+	 * @param idCategorie the idCategorie to set
+	 */
+	public void setIdCategorie(String idCategorie) {
+		// Rien à faire. Setté par ssCategorie
 	}
-
 	/**
 	 * @return the libelle
 	 */
@@ -152,12 +195,20 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 		return valeur;
 	}
 
+	/**
+	 * @return valeur absolue pour editor
+	 */
+	@JsonIgnore
 	public String getValeurAbsStringFromDouble() {
 		return Double.toString(Math.abs(valeur));
 	}
 
+	/**
+	 * @param valeurS set valeur depuis l'editor
+	 */
+	@JsonIgnore
 	public void setValeurAbsStringToDouble(String valeurS){
-		valeurS = DataUtils.getValueFromString(valeurS);
+		valeurS = BudgetDataUtils.getValueFromString(valeurS);
 		if(valeurS != null){
 			this.valeur = Math.abs(Double.parseDouble(valeurS)) * (TypeOperationEnum.DEPENSE.equals(this.getTypeDepense()) ? -1 : 1);
 		}
@@ -232,7 +283,7 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 	public void setPeriodique(boolean periodique) {
 		this.periodique = periodique;
 	}
-	
+
 
 	/**
 	 * @param periodique the periodique to set
@@ -255,18 +306,18 @@ public class LigneOperation implements Comparable<LigneOperation>, Serializable 
 		this.derniereOperation = derniereOperation;
 	}	
 
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("LigneOperation [uuid=").append(id).append(", ssCategorie=").append(ssCategorie).append(", libelle=")
-				.append(libelle).append(", typeDepense=").append(typeDepense).append(", etat=").append(etat)
-				.append(", valeur=").append(valeur).append(", dateOperation=").append(dateOperation)
-				.append(", dateMaj=").append(dateMaj).append(", auteur=").append(auteur).append(", periodique=")
-				.append(periodique).append(", derniereOperation=").append(derniereOperation).append("]");
+		builder.append("LigneOperation [uuid=").append(id).append(", idSsCategorie=").append(idSsCategorie).append(", libelle=")
+		.append(libelle).append(", typeDepense=").append(typeDepense).append(", etat=").append(etat)
+		.append(", valeur=").append(valeur).append(", dateOperation=").append(dateOperation)
+		.append(", dateMaj=").append(dateMaj).append(", auteur=").append(auteur).append(", periodique=")
+		.append(periodique).append(", derniereOperation=").append(derniereOperation).append("]");
 		return builder.toString();
 	}
 

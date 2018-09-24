@@ -4,11 +4,11 @@
 package com.terrier.finances.gestion.communs.utils.exceptions;
 
 /**
- * Utilisateur non autorisé
+ * Utilisateur non authentifié
  * @author vzwingma
  *
  */
-public class UserNotAuthorizedException extends AbstractBusinessException {
+public class UserAccessForbiddenException extends AbstractBusinessException {
 
 	/**
 	 * 
@@ -17,9 +17,9 @@ public class UserNotAuthorizedException extends AbstractBusinessException {
 	
 	/**
 	 * Message d'erreur
-	 * @param libelleErreur message d'erreur
+	 * @param libelleErreur libellé de l'erreur
 	 */
-	public UserNotAuthorizedException(String libelleErreur){
+	public UserAccessForbiddenException(String libelleErreur){
 		super(libelleErreur);
 	}
 }

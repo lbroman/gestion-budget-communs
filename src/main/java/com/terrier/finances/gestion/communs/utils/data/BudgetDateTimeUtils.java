@@ -13,14 +13,9 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.TimeZone;
-
-import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
 
 
 /**
@@ -28,7 +23,7 @@ import com.terrier.finances.gestion.communs.operations.model.LigneOperation;
  * @author vzwingma
  *
  */
-public class DataUtils {
+public class BudgetDateTimeUtils {
 
 	public static final String DATE_DAY_PATTERN = "dd/MM/yyyy";
 	public static final String DATE_DAY_HOUR_PATTERN = DATE_DAY_PATTERN + " HH:mm";
@@ -37,7 +32,7 @@ public class DataUtils {
 	public static final String DATE_FULL_TEXT_PATTERN = "dd MMMM yyyy HH:mm";
 
 
-	private DataUtils(){
+	private BudgetDateTimeUtils(){
 		// Constructeur privé pour classe utilitaire
 	}
 
@@ -50,16 +45,16 @@ public class DataUtils {
 	}
 
 	/**
-	 * @param utcTime
+	 * @param utcTime temps en UTC
 	 * @return date transformée en local
-	 * @throws ParseException
+	 * @throws ParseException erreur de parsing
 	 */
 	public static final String getUtcToLocalTime(String utcTime) throws ParseException{
 		SimpleDateFormat sdfutc = new SimpleDateFormat(DATE_DAY_HOUR_PATTERN, Locale.FRENCH);
 		sdfutc.setTimeZone(TimeZone.getTimeZone("UTC"));
 		Date dateBuild = sdfutc.parse(utcTime);
 		SimpleDateFormat sdflocale = new SimpleDateFormat(DATE_DAY_HOUR_PATTERN, Locale.FRENCH);
-		sdflocale.setTimeZone(DataUtils.getTzParis());
+		sdflocale.setTimeZone(BudgetDateTimeUtils.getTzParis());
 		return sdflocale.format(dateBuild);
 	}
 
@@ -72,6 +67,7 @@ public class DataUtils {
 	}
 
 	/**
+	 * @param localDateTime temps local
 	 * @return la date actuelle en LocalDate
 	 */
 	public static final Long getLongFromLocalDateTime(LocalDateTime localDateTime){
@@ -83,11 +79,35 @@ public class DataUtils {
 	
 
 	/**
+	 * @param longTime temps en ms
 	 * @return la date actuelle en LocalDate
 	 */
 	public static final LocalDateTime getLocalDateTimeFromLong(Long longTime){
 		if(longTime != null){
 			return LocalDateTime.ofInstant(Instant.ofEpochSecond(longTime), getZIdParis());
+		}
+		return null;
+	}
+	
+
+	/**
+	 * @param localDate temps local
+	 * @return la date actuelle en LocalDate
+	 */
+	public static final Long getLongFromLocalDate(LocalDate localDate){
+		if(localDate != null){
+			return localDate.toEpochDay();
+		}
+		return null;
+	}
+
+	/**
+	 * @param longTime temps en ms
+	 * @return la date actuelle en LocalDate
+	 */
+	public static final LocalDate getLocalDateFromLong(Long longTime){
+		if(longTime != null){
+			return LocalDate.ofEpochDay(longTime);
 		}
 		return null;
 	}
@@ -101,7 +121,7 @@ public class DataUtils {
 	}
 
 	/**
-	 * @param month
+	 * @param month mois
 	 * @return la date localisée en début du mois, au mois positionnée
 	 */
 	public static final LocalDate localDateFirstDayOfMonth(Month month){
@@ -112,7 +132,8 @@ public class DataUtils {
 	}
 
 	/**
-	 * @param month
+	 * @param month mois
+	 * @param year année
 	 * @return la date localisée en début du mois, au mois positionnée
 	 */
 	public static final LocalDate localDateFirstDayOfMonth(Month month, int year){
@@ -123,66 +144,30 @@ public class DataUtils {
 				.with(ChronoField.YEAR, year);
 	}
 
+	/**
+	 * @param date date en local
+	 * @return libellé de la date
+	 */
 	public static final String getLibelleDate(LocalDateTime date){
 		DateTimeFormatter sdf = new DateTimeFormatterBuilder()
-				.appendPattern(DataUtils.DATE_FULL_TEXT_PATTERN)
+				.appendPattern(BudgetDateTimeUtils.DATE_FULL_TEXT_PATTERN)
 				.toFormatter(Locale.FRENCH);
 		return date.format(sdf);
 	}
 	
 	/**
-	 * @param date
-	 * @return localdate
+	 * @param date date
+	 * @return localdate local date correspondante
 	 */
 	public static LocalDate asLocalDate(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	/**
-	 * @param listeOperations
-	 * @return date max d'une liste de dépenses
+	 * @param localdate locamdate
+	 * @return date local date correspondante
 	 */
-	public static LocalDate getMaxDateListeOperations(List<LigneOperation> listeOperations){
-
-		LocalDate localDateDerniereOperation = localDateNow();
-
-		if(listeOperations != null && !listeOperations.isEmpty()){
-			// Comparaison de date
-			Comparator <LigneOperation> comparator = Comparator.comparing(LigneOperation::getDateOperation, (date1, date2) -> {
-				if(date1 == null){
-					return 1;
-				}
-				else if(date2 == null){
-					return -1;
-				}
-				else{
-					return date1.before(date2) ? -1 : 1;
-				}
-			});
-			Optional<LigneOperation> maxDate = listeOperations.stream().max(comparator);
-			if(maxDate.isPresent() && maxDate.get().getDateOperation() != null){
-				localDateDerniereOperation = asLocalDate(maxDate.get().getDateOperation());
-			}
-		}
-		return localDateDerniereOperation;
-	}
-
-
-	/**
-	 * @param valeurS
-	 * @return la valeur d'un String en double
-	 */
-	public static String getValueFromString(String valeurS){
-
-		if(valeurS != null){
-			valeurS = valeurS.replaceAll(",", ".");
-			try{
-				valeurS = Double.toString(Double.valueOf(valeurS));
-			}
-			catch(Exception e){
-				valeurS = null;
-			}
-		}
-		return valeurS;
+	public static Date asDate(LocalDate localdate) {
+		return new Date(localdate.toEpochDay());
 	}
 }

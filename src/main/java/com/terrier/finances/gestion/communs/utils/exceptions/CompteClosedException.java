@@ -3,30 +3,24 @@
  */
 package com.terrier.finances.gestion.communs.utils.exceptions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Budget non trouvé
  * @author vzwingma
  *
  */
-public class CompteClosedException extends Exception {
+public class CompteClosedException extends AbstractBusinessException {
 
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5428709492299879225L;
-
+	private static final long serialVersionUID = -5654536011914512355L;
 
 	/**
-	 * Logger
+	 * Erreur compte clos
+	 * @param libelleErreur libellé de l'erreur
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(CompteClosedException.class);
-	
-	
-	public CompteClosedException(StringBuilder libelleErreur){
-		super(libelleErreur.toString());
-		LOGGER.error("{}", libelleErreur);
+	public CompteClosedException(String libelleErreur){
+		super(libelleErreur);
 	}
 }
