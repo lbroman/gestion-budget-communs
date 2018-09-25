@@ -28,10 +28,10 @@ public class TestJwt {
 		String token = Jwts.builder()
 				.setSubject("TEST_USER")
 				.setId("TEST_USER")
-				.claim(JwtConfig.JWT_CLAIM_USERID_HEADER, "TEST_USER")
+				.claim(JwtConfigEnum.JWT_CLAIM_HEADER_USERID, "TEST_USER")
 				.setIssuedAt(new Date(now))
-				.setExpiration(new Date(now + JwtConfig.JWT_EXPIRATION_S * 1000))  // in milliseconds
-				.signWith(SignatureAlgorithm.HS512, JwtConfig.JWT_SECRET_KEY.getBytes())
+				.setExpiration(new Date(now + JwtConfigEnum.JWT_EXPIRATION_S * 1000))  // in milliseconds
+				.signWith(SignatureAlgorithm.HS512, JwtConfigEnum.JWT_SECRET_KEY.getBytes())
 				.compact();
 
 		assertNotNull(token);
@@ -43,18 +43,18 @@ public class TestJwt {
 		String token = Jwts.builder()
 				.setSubject("TEST_USER")
 				.setId("068f7937-17f8-49c0-ae08-2d2d28ca65b2")
-				.claim(JwtConfig.JWT_CLAIM_USERID_HEADER, "TEST_USER")
-				.signWith(SignatureAlgorithm.HS512, JwtConfig.JWT_SECRET_KEY.getBytes())
+				.claim(JwtConfigEnum.JWT_CLAIM_HEADER_USERID, "TEST_USER")
+				.signWith(SignatureAlgorithm.HS512, JwtConfigEnum.JWT_SECRET_KEY.getBytes())
 				.compact();
 
 		assertNotNull(token);
 		assertEquals(TestJwt.TOKEN_VALUE, token);
 		
-		Claims claims = JwtConfig.getJWTClaims(token);
+		Claims claims = JwtConfigEnum.getJWTClaims(token);
 		assertNotNull(claims);
 		assertEquals("068f7937-17f8-49c0-ae08-2d2d28ca65b2", claims.getId());
 		assertEquals("TEST_USER", claims.getSubject());
-		assertEquals("TEST_USER", claims.get(JwtConfig.JWT_CLAIM_USERID_HEADER));
+		assertEquals("TEST_USER", claims.get(JwtConfigEnum.JWT_CLAIM_HEADER_USERID));
 		
 	}
 	
@@ -64,7 +64,7 @@ public class TestJwt {
 		assertNotNull(TestJwt.INVALID_SIGNATURE);
 		
 		assertThrows(SignatureException.class, () -> {
-			JwtConfig.getJWTClaims(TestJwt.INVALID_SIGNATURE);
+			JwtConfigEnum.getJWTClaims(TestJwt.INVALID_SIGNATURE);
 		});
 	}
 }
