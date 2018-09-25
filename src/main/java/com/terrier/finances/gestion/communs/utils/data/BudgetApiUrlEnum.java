@@ -71,7 +71,7 @@ public class BudgetApiUrlEnum {
 	 * Budget
 	 */
 	public static final String BUDGET_BASE = "/budgets/v1";	
-	public static final String BUDGET_ID = URL_PARAM_ID_BUDGET;
+	public static final String BUDGET_ID = "/"+ URL_PARAM_ID_BUDGET;
 	public static final String BUDGET_ID_FULL = BUDGET_BASE + BUDGET_ID;
 
 	// Avec en paramètre
@@ -90,7 +90,7 @@ public class BudgetApiUrlEnum {
 	/**
 	 * Operations
 	 */
-	public static final String BUDGET_OPERATION = "/" + BUDGET_ID + "/operations/"+URL_PARAM_ID_OPERATION;
+	public static final String BUDGET_OPERATION = BUDGET_ID + "/operations/"+URL_PARAM_ID_OPERATION;
 	public static final String BUDGET_OPERATION_FULL = BUDGET_BASE + BUDGET_OPERATION;	
 
 	public static final String BUDGET_OPERATION_DERNIERE = BUDGET_OPERATION + "/derniereOperation";

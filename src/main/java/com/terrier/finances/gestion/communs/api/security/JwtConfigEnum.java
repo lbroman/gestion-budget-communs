@@ -17,24 +17,24 @@ import io.jsonwebtoken.UnsupportedJwtException;
  * @author vzwingma
  *
  */
-public class JwtConfig {
+public class JwtConfigEnum {
 	
-	private JwtConfig(){
+	private JwtConfigEnum(){
 		// Constructeur privé
 	}
 
 	/**
 	 * Logger
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(JwtConfig.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JwtConfigEnum.class);
 	
-	public static final String JWT_AUTH_HEADER = "Authorization";
+	public static final String JWT_HEADER_AUTH = "Authorization";
 
-	public static final  String JWT_AUTH_PREFIX = "Bearer : ";
+	public static final  String JWT_HEADER_AUTH_PREFIX = "Bearer : ";
 
-	public static final String JWT_CLAIM_USERID_HEADER = "USERID";
+	public static final String JWT_CLAIM_HEADER_USERID = "USERID";
 	
-	public static final String JWT_CLAIM_AUTORITIES_HEADER = "authorities";
+	public static final String JWT_CLAIM_HEADER_AUTORITIES = "authorities";
 
 	public static final  int JWT_EXPIRATION_S = 3600;
 
@@ -48,10 +48,10 @@ public class JwtConfig {
 	 * @return Elements JWT
 	 */
 	public static Claims getJWTClaims(String token){
-		token = token.replace(JwtConfig.JWT_AUTH_PREFIX, "");
+		token = token.replace(JwtConfigEnum.JWT_HEADER_AUTH_PREFIX, "");
 		try {
 			Jws<Claims> jwtClaims = Jwts.parser()
-					.setSigningKey(JwtConfig.JWT_SECRET_KEY.getBytes())
+					.setSigningKey(JwtConfigEnum.JWT_SECRET_KEY.getBytes())
 					.parseClaimsJws(token);
 					return jwtClaims.getBody();
 		}
