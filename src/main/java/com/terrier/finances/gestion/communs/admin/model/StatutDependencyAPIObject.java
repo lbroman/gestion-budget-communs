@@ -1,8 +1,7 @@
 package com.terrier.finances.gestion.communs.admin.model;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -56,8 +55,15 @@ public class StatutDependencyAPIObject extends AbstractAPIObjectModel {
 	
 	// Date de la mise à jour
 	@ApiModelProperty(notes = "Date du statut", required=true)
-	private Calendar date;
+	private String date;
 
+	// Constructreur
+	public StatutDependencyAPIObject() {
+		this.statusObject = StatutStateEnum.INCONNU;
+		this.statusCompile = StatutStateEnum.INCONNU;
+		this.date = BudgetDateTimeUtils.getLibelleDate(LocalDateTime.now());
+	}
+	
 	/**
 	 * Création d'une dépendance
 	 * @param nom
@@ -66,7 +72,7 @@ public class StatutDependencyAPIObject extends AbstractAPIObjectModel {
 		this.nom = nom;
 		this.statusObject = StatutStateEnum.INCONNU;
 		this.statusCompile = StatutStateEnum.INCONNU;
-		this.date = Calendar.getInstance();
+		this.date = BudgetDateTimeUtils.getLibelleDate(LocalDateTime.now());
 	}
 	
 	
@@ -91,7 +97,7 @@ public class StatutDependencyAPIObject extends AbstractAPIObjectModel {
 			}
 		}
 		if(dependencyFound){
-			this.date = Calendar.getInstance();
+			this.date = BudgetDateTimeUtils.getLibelleDate(LocalDateTime.now());
 			updateStatusCompile();
 		}
 		return dependencyFound;
@@ -169,19 +175,10 @@ public class StatutDependencyAPIObject extends AbstractAPIObjectModel {
 	}
 
 	/**
-	 * @return the timestamp
-	 */
-//	@ApiModelProperty(notes = "Timestamp du statut", required=true)
-	public Long getTimestamp() {
-		return this.date != null ? this.date.getTimeInMillis() : 0L;
-	}
-
-	/**
 	 * @return the date
 	 */
 	public String getDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat(BudgetDateTimeUtils.DATE_DAY_HOUR_S_PATTERN);
-		return date != null ? sdf.format(this.date.getTime()) : "null";
+		return this.date;
 	}
 
 
