@@ -47,7 +47,7 @@ public class JwtConfigEnum {
 	 * @param token token d'authentification
 	 * @return Elements JWT
 	 */
-	public static Claims getJWTClaims(String token){
+	public static Claims getJWTClaims(String token) throws SecurityException {
 		token = token.replace(JwtConfigEnum.JWT_HEADER_AUTH_PREFIX, "");
 		try {
 			Jws<Claims> jwtClaims = Jwts.parser()
@@ -57,15 +57,15 @@ public class JwtConfigEnum {
 		}
 		catch (ExpiredJwtException e) {
 			LOGGER.error("[SEC] Le token [{}] est expiré : {}", token, e.getMessage());
-			throw e;
+			throw new SecurityException("[SEC] Le token ["+token+"] est expiré", e);
 		}
 		catch (SignatureException e) {
 			LOGGER.error("[SEC] Le token [{}] est mal signé : {}", token, e.getMessage());
-			throw e;
+			throw new SecurityException("[SEC] Le token ["+token+"] est mal signé ", e);
 		}
 		catch (UnsupportedJwtException | MalformedJwtException e) {
 			LOGGER.error("[SEC] Le token [{}] est incorrect : {}", token, e.getMessage());
-			throw e;
+			throw new SecurityException("[SEC] Le token ["+token+"] est incorrect", e);
 		}		
 	}
 }
