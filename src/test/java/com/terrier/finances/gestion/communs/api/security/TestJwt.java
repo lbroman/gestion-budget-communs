@@ -63,7 +63,7 @@ public class TestJwt {
 	public void testParseInvalidToken(){
 		assertNotNull(TestJwt.INVALID_SIGNATURE);
 		
-		assertThrows(SignatureException.class, () -> {
+		assertThrows(SecurityException.class, () -> {
 			JwtConfigEnum.getJWTClaims(TestJwt.INVALID_SIGNATURE);
 		});
 	}
