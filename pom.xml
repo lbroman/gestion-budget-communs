@@ -30,6 +30,13 @@
 				<configuration>
 					<release>${maven.compiler.target}</release>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.ow2.asm</groupId>
+						<artifactId>asm</artifactId>
+						<version>7.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -87,6 +94,13 @@
 						--illegal-access=permit
 					</argLine>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.ow2.asm</groupId>
+						<artifactId>asm</artifactId>
+						<version>7.1</version>
+					</dependency>
+				</dependencies>				
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
