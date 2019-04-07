@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.vzwingma.finances.budget</groupId>
 	<artifactId>communs</artifactId>
-	<version>7.4.0-SNAPSHOT</version>
+	<version>7.4.0</version>
 
 	<name>[Budget] Communs</name>
 	<description>Communs de l'application</description>
