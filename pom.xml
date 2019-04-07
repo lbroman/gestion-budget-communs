@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.vzwingma.finances.budget</groupId>
 	<artifactId>communs</artifactId>
-	<version>7.3.2</version>
+	<version>7.4.0-SNAPSHOT</version>
 
 	<name>[Budget] Communs</name>
 	<description>Communs de l'application</description>
@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<spring.version>5.0.10.RELEASE</spring.version>
+		<spring.version>5.1.5.RELEASE</spring.version>
 		<jackson.version>2.9.8</jackson.version>
 		<jersey.version>2.27</jersey.version>
 		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
@@ -229,13 +229,13 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.3.1</version>
+			<version>5.4.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.3.1</version>
+			<version>5.4.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
