@@ -10,8 +10,7 @@
 
 [![Build Status](https://img.shields.io/travis/com/vzwingma/gestion-budget-communs.svg)](https://travis-ci.com/vzwingma/gestion-budget-communs/branches)
 [![GitHub issues](https://img.shields.io/github/issues-raw/vzwingma/gestion-budget-communs.svg?style=flat-square)](https://github.com/vzwingma/gestion-budget-communs/issues)
-
-[![Known Vulnerabilities](https://snyk.io/test/github/vzwingma/gestion-budget-communs/badge.svg)](https://snyk.io/test/github/vzwingma/gestion-budget-communs)
+[![Known Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/vzwingma/gestion-budget-communs.svg)](https://snyk.io/test/github/vzwingma/gestion-budget-communs)
 [![Dépendences](https://img.shields.io/librariesio/github/vzwingma/gestion-budget-communs.png)](https://libraries.io/github/vzwingma/gestion-budget-communs)
 
 <a href="https://sonarcloud.io/dashboard?id=gestion-budget-communs"><img alt="Sonar Build Status" src="https://sonarcloud.io/api/project_badges/measure?project=gestion-budget-communs&metric=coverage" /></a>
