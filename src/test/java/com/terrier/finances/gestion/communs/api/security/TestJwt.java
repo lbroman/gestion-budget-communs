@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 public class TestJwt {
 
 	
-	private static final String TOKEN_VALUE = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJURVNUX1VTRVIiLCJqdGkiOiIwNjhmNzkzNy0xN2Y4LTQ5YzAtYWUwOC0yZDJkMjhjYTY1YjIiLCJVU0VSSUQiOiJURVNUX1VTRVIifQ.n81j9UI_L8-VgP7S2Ruxz5BFT1ys6GjlJe-GD7X1gJ8";
+	private static final String TOKEN_VALUE = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJURVNUX1VTRVIiLCJqdGkiOiIwNjhmNzkzNy0xN2Y4LTQ5YzAtYWUwOC0yZDJkMjhjYTY1YjIiLCJVU0VSSUQiOiJURVNUX1VTRVIifQ.Bi9A2WrU7nWOtZ0GnCF5BL-v1QKkVbfgVVlonfYYA1mmn_44sUL-RglfM4KTLkpg2HejOlxMKDwWNF5sxWEouA";
 	
 	private static final String INVALID_SIGNATURE = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJURVNUX1VTRVIiLCJqdGkiOiJURVNUX1VTRVIifQ.wZjHEX-HjRtd5-WVXd_gANGQLzJWyMZ945aXlWkqahKwpGFWai2o4_BOW_ToPGsQQZaTfk2Jr3WU1EoQUmC7XQ";
 	
@@ -30,7 +30,7 @@ public class TestJwt {
 				.claim(JwtConfigEnum.JWT_CLAIM_HEADER_USERID, "TEST_USER")
 				.setIssuedAt(new Date(now))
 				.setExpiration(new Date(now + JwtConfigEnum.JWT_EXPIRATION_S * 1000))  // in milliseconds
-				.signWith(Keys.hmacShaKeyFor( JwtConfigEnum.JWT_SECRET_KEY.getBytes()))
+				.signWith(SignatureAlgorithm.HS512, JwtConfigEnum.JWT_SECRET_KEY.getBytes())
 				.compact();
 
 		assertNotNull(token);
@@ -39,12 +39,11 @@ public class TestJwt {
 	
 	@Test
 	public void testParseToken(){
-		
 		String token = Jwts.builder()
 				.setSubject("TEST_USER")
 				.setId("068f7937-17f8-49c0-ae08-2d2d28ca65b2")
 				.claim(JwtConfigEnum.JWT_CLAIM_HEADER_USERID, "TEST_USER")
-				.signWith(Keys.hmacShaKeyFor( JwtConfigEnum.JWT_SECRET_KEY.getBytes()))
+				.signWith(SignatureAlgorithm.HS512, JwtConfigEnum.JWT_SECRET_KEY.getBytes())
 				.compact();
 
 		assertNotNull(token);
