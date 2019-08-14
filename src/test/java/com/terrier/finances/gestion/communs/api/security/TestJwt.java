@@ -2,6 +2,7 @@ package com.terrier.finances.gestion.communs.api.security;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Calendar;
@@ -61,9 +62,6 @@ public class TestJwt {
 	@Test
 	public void testParseInvalidToken(){
 		assertNotNull(TestJwt.INVALID_SIGNATURE);
-		
-		assertThrows(SecurityException.class, () -> {
-			JwtConfigEnum.getJWTClaims(TestJwt.INVALID_SIGNATURE);
-		});
+		assertNull(JwtConfigEnum.getJWTClaims(TestJwt.INVALID_SIGNATURE));
 	}
 }
