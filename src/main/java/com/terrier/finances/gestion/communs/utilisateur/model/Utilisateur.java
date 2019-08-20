@@ -11,7 +11,6 @@ import java.util.Map;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.terrier.finances.gestion.communs.utilisateur.enums.UtilisateurDroitsEnum;
 import com.terrier.finances.gestion.communs.utilisateur.enums.UtilisateurPrefsEnum;
 import com.terrier.finances.gestion.communs.utils.data.BudgetDateTimeUtils;
@@ -36,10 +35,6 @@ public class Utilisateur implements Serializable {
 	
 	// Mot de passe
 	private String password;
-
-	// Clé de chiffrement des données. Le mot de passe du user permet de la déchiffrer
-	@JsonIgnore
-	private String masterCleChiffrementDonnees;
 
 	private LocalDateTime dernierAcces;
 	
@@ -120,20 +115,6 @@ public class Utilisateur implements Serializable {
 	@SuppressWarnings("unchecked")
 	public <T> T getPreference(UtilisateurPrefsEnum clePreference) {
 		return (T)prefsUtilisateur.get(clePreference);
-	}
-
-	/**
-	 * @return the masterCleChiffrementDonnees
-	 */
-	public String getMasterCleChiffrementDonnees() {
-		return masterCleChiffrementDonnees;
-	}
-
-	/**
-	 * @param masterCleChiffrementDonnees the masterCleChiffrementDonnees to set
-	 */
-	public void setMasterCleChiffrementDonnees(String masterCleChiffrementDonnees) {
-		this.masterCleChiffrementDonnees = masterCleChiffrementDonnees;
 	}
 
 	/**
