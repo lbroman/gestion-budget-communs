@@ -13,6 +13,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+/**
+ * Tests de token JWT
+ * @author vzwingma
+ *
+ */
 public class TestJwt {
 
 	
