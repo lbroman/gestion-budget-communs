@@ -56,13 +56,13 @@ public class JwtConfigEnum {
 					return jwtClaims.getBody();
 		}
 		catch (ExpiredJwtException e) {
-			LOGGER.error("[SEC] Le token [{}] est expiré : {}", token, e.getMessage());
+			LOGGER.error("Le token [{}] est expiré : {}", token, e.getMessage());
 		}
 		catch (SignatureException e) {
-			LOGGER.error("[SEC] Le token [{}] est mal signé : {}", token, e.getMessage());
+			LOGGER.error("Le token [{}] est mal signé : {}", token, e.getMessage());
 		}
 		catch (UnsupportedJwtException | MalformedJwtException e) {
-			LOGGER.error("[SEC] Le token [{}] est incorrect : {}", token, e.getMessage());
+			LOGGER.error("Le token [{}] est incorrect : {}", token, e.getMessage());
 		}
 		return null;
 	}
