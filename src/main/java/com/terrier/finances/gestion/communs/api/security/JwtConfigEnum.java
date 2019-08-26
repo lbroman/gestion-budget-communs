@@ -9,8 +9,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.WeakKeyException;
 
 /**
  * Config JWT
@@ -39,7 +39,7 @@ public class JwtConfigEnum {
 	public static final  int JWT_EXPIRATION_S = 3600;
 
 	@Value("${security.jwt.secret:JwtSecretKey}")
-	public static final  String JWT_SECRET_KEY = "JwtSecretKey";
+	public static final  String JWT_SECRET_KEY = "ThisIsAFullAndUnWeakJwtSecretKey";
 
 	
 	
@@ -58,8 +58,8 @@ public class JwtConfigEnum {
 		catch (ExpiredJwtException e) {
 			LOGGER.error("[SEC] Le token [{}] est expiré : {}", token, e.getMessage());
 		}
-		catch (SignatureException e) {
-			LOGGER.error("[SEC] Le token [{}] est mal signé : {}", token, e.getMessage());
+		catch (WeakKeyException e) {
+			LOGGER.error("[SEC] Le token [{}] est mal signé par une clé faible : {}", token, e.getMessage());
 		}
 		catch (UnsupportedJwtException | MalformedJwtException e) {
 			LOGGER.error("[SEC] Le token [{}] est incorrect : {}", token, e.getMessage());
