@@ -16,13 +16,16 @@ public class BudgetApiUrlEnum {
 	public static final String URL_PARAM_ID_COMPTE = "{idCompte}";
 	public static final String URL_PARAM_ID_OPERATION = "{idOperation}";
 	
-	
+	/**
+	 * Actuators
+	 */
+	public static final String ACTUATORS_BASE = "/actuator";		
+	public static final String ACTUATORS_INFO = "/info";
+	public static final String ACTUATORS_INFO_FULL = ACTUATORS_BASE + ACTUATORS_INFO;
 	/**
 	 * Statut
 	 */
 	public static final String ADMIN_BASE = "/admin";	
-	public static final String ADMIN_STATUT = "/v1/statut";
-	public static final String ADMIN_STATUT_FULL = ADMIN_BASE + ADMIN_STATUT;
 	public static final String ADMIN_ACCESS = "/v1/password/{oldpassword}/{newpassword}";
 	public static final String ADMIN_ACCESS_FULL = ADMIN_BASE + ADMIN_ACCESS;
 	/**
