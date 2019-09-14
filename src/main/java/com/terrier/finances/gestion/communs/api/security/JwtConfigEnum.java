@@ -18,7 +18,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
  *
  */
 public class JwtConfigEnum {
-	
+
 	private JwtConfigEnum(){
 		// Constructeur privé
 	}
@@ -27,13 +27,13 @@ public class JwtConfigEnum {
 	 * Logger
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtConfigEnum.class);
-	
+
 	public static final String JWT_HEADER_AUTH = "Authorization";
 
 	public static final  String JWT_HEADER_AUTH_PREFIX = "Bearer : ";
 
 	public static final String JWT_CLAIM_HEADER_USERID = "USERID";
-	
+
 	public static final String JWT_CLAIM_HEADER_AUTORITIES = "authorities";
 
 	public static final  int JWT_EXPIRATION_S = 3600;
@@ -41,19 +41,20 @@ public class JwtConfigEnum {
 	@Value("${security.jwt.secret:JwtSecretKey}")
 	public static final  String JWT_SECRET_KEY = "JwtSecretKey";
 
-	
-	
+
+
 	/**
 	 * @param token token d'authentification
 	 * @return Elements JWT
 	 */
 	public static Claims getJWTClaims(String token) throws SecurityException {
+
 		token = token.replace(JwtConfigEnum.JWT_HEADER_AUTH_PREFIX, "");
 		try {
 			Jws<Claims> jwtClaims = Jwts.parser()
 					.setSigningKey(JwtConfigEnum.JWT_SECRET_KEY.getBytes())
 					.parseClaimsJws(token);
-					return jwtClaims.getBody();
+			return jwtClaims.getBody();
 		}
 		catch (ExpiredJwtException e) {
 			LOGGER.error("Le token [{}] est expiré : {}", token, e.getMessage());

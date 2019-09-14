@@ -37,7 +37,6 @@ public class TestJwt {
 				.setExpiration(new Date(now + JwtConfigEnum.JWT_EXPIRATION_S * 1000))  // in milliseconds
 				.signWith(SignatureAlgorithm.HS512, JwtConfigEnum.JWT_SECRET_KEY.getBytes())
 				.compact();
-
 		assertNotNull(token);
 	}
 	

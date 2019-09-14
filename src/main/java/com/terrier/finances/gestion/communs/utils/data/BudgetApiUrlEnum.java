@@ -12,9 +12,12 @@ public class BudgetApiUrlEnum {
 		// Constructeur privé pour une classe enum
 	}
 	
-	public static final String URL_PARAM_ID_BUDGET = "{idBudget}";
-	public static final String URL_PARAM_ID_COMPTE = "{idCompte}";
-	public static final String URL_PARAM_ID_OPERATION = "{idOperation}";
+	public static final String PARAM_ID_BUDGET = "idBudget";
+	public static final String URL_PARAM_ID_BUDGET = "{"+PARAM_ID_BUDGET+"}";
+	public static final String PARAM_ID_COMPTE = "idCompte";
+	private static final String URL_PARAM_ID_COMPTE = "{"+PARAM_ID_COMPTE+"}";
+	public static final String PARAM_ID_OPERATION = "idOperation";
+	private static final String URL_PARAM_ID_OPERATION = "{"+PARAM_ID_OPERATION+"}";
 	
 	/**
 	 * Actuators

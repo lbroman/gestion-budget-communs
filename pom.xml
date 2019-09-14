@@ -133,7 +133,7 @@
 		<system>GitHub Issues</system>
 	</issueManagement>
 	<scm>
-		<url>https://github.com/vzwingma/gestion-budget-communs/tree/webapp</url>
+		<url>https://github.com/vzwingma/gestion-budget-communs/tree/master</url>
 		<connection>scm:git:git://github.com/vzwingma/gestion-budget-communs.git</connection>
 		<developerConnection>scm:git:git@github.com:vzwingma/gestion-budget-communs.git</developerConnection>
 		<tag>HEAD</tag>
