@@ -145,7 +145,7 @@ public class BudgetDataUtils {
 
 	/**
 	 * @param id id de la catégorie
-	 * @param listeCategories
+	 * @param listeCategories list de catégories
 	 * @return catégorie correspondante
 	 */
 	public static CategorieOperation getCategorieById(String id, List<CategorieOperation> listeCategories){

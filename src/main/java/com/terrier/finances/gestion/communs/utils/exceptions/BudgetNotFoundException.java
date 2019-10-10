@@ -17,7 +17,7 @@ public class BudgetNotFoundException extends AbstractBusinessException {
 
 	/**
 	 * Exception Budget introuvable
-	 * @param libelleErreur
+	 * @param libelleErreur libelle de erreur
 	 */
 	public BudgetNotFoundException(String libelleErreur) {
 		super(libelleErreur);
